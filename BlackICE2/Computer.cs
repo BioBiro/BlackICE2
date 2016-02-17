@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BlackICE2
 {
-    class X86CPU : ICPU
+    public class Computer
     {
+        public ICPU cPU;
 
+        public Memory memory;
     }
 }

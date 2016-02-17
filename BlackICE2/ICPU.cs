@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackICE2
 {
-    interface ICPU
+    public interface ICPU
     {
     }
 }

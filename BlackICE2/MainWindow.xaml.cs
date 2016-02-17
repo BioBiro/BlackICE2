@@ -25,72 +25,40 @@ namespace BlackICE2
             InitializeComponent();
 
 
-
-
-
-
-
-
-
-
-
-
-            TextBox tb = new TextBox();
-
-            tb.Text = "hahaha";
-
-
-
-            listBox.Items.Add(tb);
-            // ^ To allow editable code at runtime, always read code from the textBox, not the internal data structures, and... 
-            // ... either use textBoxes at listBox items, or allow double-clicking or something on listBox rows to brign up modal dialog to edit the line's code?
-
-
-
-            listBox.SelectedIndex = 1;
-
-            //listBox.IsHitTestVisible = false;
-
-
-
-            TextBox tb2 = new TextBox();
-
-            tb2.Text = "wahaha~";
-
-            listBox.Items.Add(tb2);
-
-
-
-
-
-
-
-
-
-
-
-
+            // new program typed in; open an existing program, etc. Instructions are put into GUI editor.
+            // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
             ListBoxItem lbi = new ListBoxItem();
-            lbi.Content = "hahaha";
+            lbi.Content = "mov eax, 7";
             lbi.MouseDoubleClick += _MouseLeftButtonDown;
 
             listBox1.Items.Add(lbi);
 
             ListBoxItem lbi2 = new ListBoxItem();
-            lbi2.Content = "wahaha~";
+            lbi2.Content = "inc eax";
             lbi2.MouseDoubleClick += _MouseLeftButtonDown;
             listBox1.Items.Add(lbi2);
 
             listBox1.SelectedIndex = 0;
+
+            
+
+            // run the text in the GUI editor.
+            Computer computer = new Computer();
+            // todo computer.cPU = new X86CPU(computer);
+            computer.memory = new Memory();
+
+            Human Matthew = new Human();
+
+            // todo Matthew.Run(computer, MatthewsProgram);
         }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ListBoxItem lbi = sender as ListBoxItem;
 
-            string input = Microsoft.VisualBasic.Interaction.InputBox("Enter a new line (was: " + lbi.Content as string + ")", "Change line", lbi.Content as string, -1, -1);
+            //string input = Microsoft.VisualBasic.Interaction.InputBox("Enter a new line (was: " + lbi.Content as string + ")", "Change line", lbi.Content as string, -1, -1);
 
-            lbi.Content = input;
+            //lbi.Content = input;
         }
         // todo Remove reference to VisualBasic (used for test InputBox).
     }
