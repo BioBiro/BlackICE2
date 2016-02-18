@@ -8,5 +8,8 @@ namespace BlackICE2
 {
     public interface ICPU
     {
+        IRegisters GetRegisters();
+
+        // todo CPUs need to support big/little endian. C#'s BitConverter has a method for checking this IsLittleEndian() <--.
     }
 }

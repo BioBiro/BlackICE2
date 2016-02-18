@@ -19,5 +19,12 @@ namespace BlackICE2
             this.x86InstructionSet = new X86InstructionSet(computer);
             this.x86Registers = new X86Registers();
         }
+
+
+
+        public IRegisters GetRegisters()
+        {
+            return this.x86Registers;
+        }
     }
 }

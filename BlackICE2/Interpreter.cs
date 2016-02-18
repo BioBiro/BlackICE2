@@ -37,7 +37,7 @@ namespace BlackICE2
             // Just convert mov eax, 7 and inc eax to machine code and return it, for now...
 
             //return new List<byte>() { 0 };
-            return new List<byte>() { 88, 07, 69 }; // Not correct; just made up. (88 MOV EAX, 07 byte value as param, 69 INC EAX).
+            return new List<byte>() { 184, 07, 40 };
         }
     }
 }

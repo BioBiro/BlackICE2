@@ -28,7 +28,7 @@ namespace BlackICE2
             
             for (int i = 0; i < program.codeSegment.Count; i++)
             {
-                if (program.codeSegment[i] == 88)
+                if (program.codeSegment[i] == 184)
                 {
                     // Execute machine code... somehow
 
@@ -66,18 +66,54 @@ namespace BlackICE2
                     //List<Operand> returnHolder = new List<Operand>();
 
                     X86InstructionSet instructions = new X86InstructionSet(computer); // todo <-- horrible hack creating a new instruction set on the fly, here... //computer.cPU.instructionSet;
-                    //returnHolder = info.Invoke(methods, parameters) as List<Operand>;
-
-
-                    object[] objects = parameters.Cast<object>().ToArray(); // Ugh...
-
-                    info.Invoke(instructions, objects);//parameters);
+                                                                                      //returnHolder = info.Invoke(methods, parameters) as List<Operand>;
+                                                                                                          
+                    info.Invoke(instructions, new object[] { parameters });//parameters); // Turn byte array into object array with single byte array element.
 
                     //squishyOutput = returnHolder;
                 }
-                else if (program.codeSegment[i] == 69)
+                else if (program.codeSegment[i] == 40)
                 {
+                    // Execute machine code... somehow
 
+                    // Do your reflective invocation thing here...
+
+                    Type reflectionType = typeof(X86InstructionSet);
+
+
+
+                    // Turn 32-bit instruction opcode into instruction opcode.
+
+
+
+                    // Prep for 'reflective invoke' :-).
+                    string methodName = "_" + program.codeSegment[i];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
+
+
+
+                    MethodInfo info = reflectionType.GetMethod(methodName);//this.instruction);
+                    ParameterInfo[] parameterInfos = info.GetParameters();
+
+                    //byte[] parameters = new byte[]();
+
+                    /*for (int i = 1; i <= parameterInfos.Count(); i++) // Skip first operand, as that will be the opcode.
+                    {
+                        Array.Resize(ref parameters, parameters.Count() + 1);
+
+                        parameters[parameters.Count() - 1] = this.operands[i];
+                    }*/
+                    //Array.Resize(ref parameters, parameters.Count() + 1);               
+
+
+
+                    //List<Operand> returnHolder = new List<Operand>();
+
+                    X86InstructionSet instructions = new X86InstructionSet(computer); // todo <-- horrible hack creating a new instruction set on the fly, here... //computer.cPU.instructionSet;
+                                                                                      //returnHolder = info.Invoke(methods, parameters) as List<Operand>;
+
+                    info.Invoke(instructions, null);//parameters); // Turn byte array into object array with single byte array element.
+
+                    //squishyOutput = returnHolder;
                 }
             }
         }

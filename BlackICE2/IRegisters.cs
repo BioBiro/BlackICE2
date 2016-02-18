@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BlackICE2
 {
-    interface IRegisters
+    public interface IRegisters
     {
+        byte[] GetRegister(int register, int segment);
+
+        void SetRegister(int register, int segment, byte[] value);
     }
 }
