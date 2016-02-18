@@ -8,5 +8,13 @@ namespace BlackICE2
 {
     class Program
     {
+        public List<byte> codeSegment;
+
+
+
+        public Program()
+        {
+            this.codeSegment = new List<byte>();
+        }
     }
 }

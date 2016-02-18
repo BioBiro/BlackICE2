@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackICE2
 {
-    class IInstructionSet
+    public interface IInstructionSet
     {
     }
 }

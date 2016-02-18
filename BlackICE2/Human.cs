@@ -15,14 +15,14 @@ namespace BlackICE2
             // 1. Execute interpreter on listing.
             Interpreter interpreter = new Interpreter();
 
-            // todo Program program = interpreter.Interpret(listing, computer.cPU.CPU_BYTES);
+            Program program = interpreter.Interpret(listing);
 
 
 
             // 2. Execute loader on source.
             Loader loader = new Loader();
 
-            // todo loader.Load(computer, program);
+            loader.Load(computer, program);
         }
     }
 }

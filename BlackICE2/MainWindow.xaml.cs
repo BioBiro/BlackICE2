@@ -25,8 +25,10 @@ namespace BlackICE2
             InitializeComponent();
 
 
+
             // new program typed in; open an existing program, etc. Instructions are put into GUI editor.
             // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
+            // ^ Don't worry about how you're going to index the correct machine code character(s) to change - just put the entire code segment into the GUI, then let the form component word-wrap it. You can send the whole thing forwards/back if you want into the Loader in memory, or come up with a fancier way of indexing it if you want.
             ListBoxItem lbi = new ListBoxItem();
             lbi.Content = "mov eax, 7";
             lbi.MouseDoubleClick += _MouseLeftButtonDown;
@@ -44,12 +46,19 @@ namespace BlackICE2
 
             // run the text in the GUI editor.
             Computer computer = new Computer();
-            // todo computer.cPU = new X86CPU(computer);
+            computer.cPU = new X86CPU(computer);
             computer.memory = new Memory();
 
             Human Matthew = new Human();
 
-            // todo Matthew.Run(computer, MatthewsProgram);
+            List<string> MatthewsProgram = new List<string>();
+
+            foreach (ListBoxItem listBoxItem in listBox1.Items)
+            {
+                MatthewsProgram.Add(listBoxItem.Content as string);
+            }
+
+            Matthew.Run(computer, MatthewsProgram);
         }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -59,7 +68,6 @@ namespace BlackICE2
             //string input = Microsoft.VisualBasic.Interaction.InputBox("Enter a new line (was: " + lbi.Content as string + ")", "Change line", lbi.Content as string, -1, -1);
 
             //lbi.Content = input;
-        }
-        // todo Remove reference to VisualBasic (used for test InputBox).
+        }        
     }
 }
