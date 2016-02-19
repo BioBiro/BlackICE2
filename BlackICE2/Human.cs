@@ -12,25 +12,29 @@ namespace BlackICE2
 
 
 
-        public void Run(Computer computer, List<string> listing)
+        public Human()
+        {
+            loader = new Loader();
+        }
+
+
+
+        public Program CreateProgram(Computer computer, List<string> listing)
         {
             // Fingers on the Spectrum cassette player...
 
             // 1. Execute interpreter on listing.
             Interpreter interpreter = new Interpreter();
 
-            Program program = interpreter.Interpret(listing);
+            return interpreter.Interpret(listing);
+        }
 
 
 
+        public void PrepareProgram(Computer computer, Program program)
+        {
             // 2. Execute loader on source.
-            loader = new Loader();
-
             loader.Load(computer, program);
-            
-            
-            
-            // 3. Run the loaded program.
         }
     }
 }

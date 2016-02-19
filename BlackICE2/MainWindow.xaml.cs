@@ -29,7 +29,7 @@ namespace BlackICE2
             // new program typed in; open an existing program, etc. Instructions are put into GUI editor.
             // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
             // ^ Don't worry about how you're going to index the correct machine code character(s) to change - just put the entire code segment into the GUI, then let the form component word-wrap it. You can send the whole thing forwards/back if you want into the Loader in memory, or come up with a fancier way of indexing it if you want.
-            ListBoxItem lbi = new ListBoxItem();
+            /*ListBoxItem lbi = new ListBoxItem();
             lbi.Content = "mov eax, 7";
             lbi.MouseDoubleClick += _MouseLeftButtonDown;
 
@@ -40,7 +40,7 @@ namespace BlackICE2
             lbi2.MouseDoubleClick += _MouseLeftButtonDown;
             listBox1.Items.Add(lbi2);
 
-            listBox1.SelectedIndex = 0;
+            listBox1.SelectedIndex = 0;*/
 
 
 
@@ -51,16 +51,48 @@ namespace BlackICE2
 
             Singleton.GetSingleton().human = new Human();
 
-            List<string> MatthewsProgram = new List<string>();
+            //List<string> MatthewsProgram = new List<string>();
 
-            foreach (ListBoxItem listBoxItem in listBox1.Items)
+            /*foreach (ListBoxItem listBoxItem in listBox1.Items)
             {
                 MatthewsProgram.Add(listBoxItem.Content as string);
+            }*/
+
+            // skipped as we are testing direct machine code below --> Program mahProgram = Singleton.GetSingleton().human.CreateProgram(Singleton.GetSingleton().computer, MatthewsProgram);
+
+
+
+            // Now load the program into the computer/CPU.
+            //Singleton.GetSingleton().human.PrepareProgram(Singleton.GetSingleton().computer, mahProgram);
+
+            // shove virtual address space into GUI.
+            ListBoxItem lbix1 = new ListBoxItem();
+            lbix1.Content = "184";
+            listBox.Items.Add(lbix1);
+
+            ListBoxItem lbix2 = new ListBoxItem();
+            lbix2.Content = "07";
+            listBox.Items.Add(lbix2);
+
+            ListBoxItem lbix3 = new ListBoxItem();
+            lbix3.Content = "40";
+            listBox.Items.Add(lbix3);
+
+            // entryPoint assumed to be 0.
+
+
+            // Create Program object with code segment on fly...
+            Program p = new Program();
+            foreach (ListBoxItem listBoxItem in listBox.Items)
+            {
+                Int32 int32 = Int32.Parse(listBoxItem.Content as string);
+                p.codeSegment.Add( BitConverter.GetBytes(int32)[0]); // First byte only (8-bits).
             }
 
-            Singleton.GetSingleton().human.Run(Singleton.GetSingleton().computer, MatthewsProgram);
+            Singleton.GetSingleton().human.loader.Load(Singleton.GetSingleton().computer, p);
 
-            // https://defuse.ca/online-x86-assembler.htm
+
+            // really useful --> https://defuse.ca/online-x86-assembler.htm
         }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -75,7 +107,11 @@ namespace BlackICE2
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Singleton.GetSingleton().human.loader.Step(Singleton.GetSingleton().computer);
-            listBox1.SelectedIndex += 1;
+            //listBox1.SelectedIndex += 1;
+
+
+
+            listBox.SelectedIndex += 1;
 
 
 

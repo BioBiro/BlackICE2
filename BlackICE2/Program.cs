@@ -8,6 +8,8 @@ namespace BlackICE2
 {
     public class Program
     {
+        //public int entryPoint;
+
         public List<byte> codeSegment;
 
 
