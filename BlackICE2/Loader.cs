@@ -21,14 +21,20 @@ namespace BlackICE2
 
 
             // Load the code segment into memory.
-            // todo We've not actually loaded the code segment into memory, we're just reading it like a herp-derp.
-            // ^ You need to load it into the virtual address space like we did in the data segment.
-
-            // (machine code is already generated)
-            
             for (int i = 0; i < program.codeSegment.Count; i++)
             {
-                if (program.codeSegment[i] == 184)
+                computer.memory.virtualAddressSpace[i] = program.codeSegment[i];
+            }
+
+
+
+            // (machine code is already generated)
+
+
+
+            for (int i = 0; i < computer.memory.virtualAddressSpace.Count; i++)
+            {
+                if (computer.memory.virtualAddressSpace[i] == 184)
                 {
                     // Execute machine code... somehow
 
@@ -43,7 +49,7 @@ namespace BlackICE2
 
 
                     // Prep for 'reflective invoke' :-).
-                    string methodName = "_" + program.codeSegment[i];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
+                    string methodName = "_" + computer.memory.virtualAddressSpace[i];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
 
 
 
@@ -59,7 +65,7 @@ namespace BlackICE2
                         parameters[parameters.Count() - 1] = this.operands[i];
                     }*/
                     Array.Resize(ref parameters, parameters.Count() + 1);
-                    parameters[parameters.Count() - 1] = program.codeSegment[i + 1]; // Next byte is opcode's needed parameter.                  
+                    parameters[parameters.Count() - 1] = computer.memory.virtualAddressSpace[i + 1]; // Next byte is opcode's needed parameter.                  
 
                     
 
@@ -72,7 +78,7 @@ namespace BlackICE2
 
                     //squishyOutput = returnHolder;
                 }
-                else if (program.codeSegment[i] == 40)
+                else if (computer.memory.virtualAddressSpace[i] == 40)
                 {
                     // Execute machine code... somehow
 
@@ -87,7 +93,7 @@ namespace BlackICE2
 
 
                     // Prep for 'reflective invoke' :-).
-                    string methodName = "_" + program.codeSegment[i];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
+                    string methodName = "_" + computer.memory.virtualAddressSpace[i];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
 
 
 
