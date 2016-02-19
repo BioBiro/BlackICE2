@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace BlackICE2
 {
-    class Human
+    public class Human
     {
+        public Loader loader;
+
+
+
         public void Run(Computer computer, List<string> listing)
         {
             // Fingers on the Spectrum cassette player...
@@ -20,9 +24,13 @@ namespace BlackICE2
 
 
             // 2. Execute loader on source.
-            Loader loader = new Loader();
+            loader = new Loader();
 
             loader.Load(computer, program);
+            
+            
+            
+            // 3. Run the loaded program.
         }
     }
 }

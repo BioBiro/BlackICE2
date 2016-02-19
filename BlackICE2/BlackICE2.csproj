@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Computer.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Human.cs" />
     <Compile Include="ICPU.cs" />
     <Compile Include="IInstructionSet.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Loader.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Singleton.cs" />
     <Compile Include="X86CPU.cs" />
     <Compile Include="X86InstructionSet.cs" />
     <Compile Include="X86Registers.cs" />

@@ -42,14 +42,14 @@ namespace BlackICE2
 
             listBox1.SelectedIndex = 0;
 
-            
+
 
             // run the text in the GUI editor.
-            Computer computer = new Computer();
-            computer.cPU = new X86CPU(computer);
-            computer.memory = new Memory();
+            Singleton.GetSingleton().computer = new Computer();
+            Singleton.GetSingleton().computer.cPU = new X86CPU(Singleton.GetSingleton().computer);
+            Singleton.GetSingleton().computer.memory = new Memory();
 
-            Human Matthew = new Human();
+            Singleton.GetSingleton().human = new Human();
 
             List<string> MatthewsProgram = new List<string>();
 
@@ -58,7 +58,7 @@ namespace BlackICE2
                 MatthewsProgram.Add(listBoxItem.Content as string);
             }
 
-            Matthew.Run(computer, MatthewsProgram);
+            Singleton.GetSingleton().human.Run(Singleton.GetSingleton().computer, MatthewsProgram);
 
             // https://defuse.ca/online-x86-assembler.htm
         }
@@ -70,6 +70,19 @@ namespace BlackICE2
             //string input = Microsoft.VisualBasic.Interaction.InputBox("Enter a new line (was: " + lbi.Content as string + ")", "Change line", lbi.Content as string, -1, -1);
 
             //lbi.Content = input;
-        }        
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Singleton.GetSingleton().human.loader.Step(Singleton.GetSingleton().computer);
+            listBox1.SelectedIndex += 1;
+
+
+
+            byte[] modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister(0, 0), 4);
+            int inced = BitConverter.ToInt32(modsvalue, 0);
+
+            label1.Content = inced.ToString();
+        }
     }
 }

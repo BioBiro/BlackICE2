@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackICE2
 {
-    class Program
+    public class Program
     {
         public List<byte> codeSegment;
 

@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BlackICE2UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class InterpreterUnitTests
     {
         [TestMethod]
         public void TestMethod1()

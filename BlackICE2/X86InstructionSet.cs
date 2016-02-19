@@ -76,7 +76,7 @@ namespace BlackICE2
 
             // Create increased byte value.
 
-            byte[] modsvalue = PadWithBytes(sValue, 4);
+            byte[] modsvalue = Helper.GetHelper().PadWithBytes(sValue, 4);
             int inced = BitConverter.ToInt32(modsvalue, 0) + 1;//sValue, 0) + 1;
             byte[] incedb = BitConverter.GetBytes(inced);
             //byte[] incedValue = BitConverter.GetBytes((BitConverter.ToInt32(sValue, 0) + 1));
@@ -89,16 +89,6 @@ namespace BlackICE2
 
 
             // Flags?
-        }
-
-        public byte[] PadWithBytes(byte[] inputArray, int bytesToPad) // todo Put somewhere better than in here.
-        {
-            if (inputArray.Length < bytesToPad)
-            {
-                Array.Resize(ref inputArray, bytesToPad);
-            }
-
-            return inputArray;
         }
     }
 }
