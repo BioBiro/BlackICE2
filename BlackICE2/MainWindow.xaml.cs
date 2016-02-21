@@ -26,6 +26,10 @@ namespace BlackICE2
 
 
 
+            // It would be neat if you could dissasembler the binary/machine code into assembly instructions, for external files in this program (a dissasembler using the instruction-fetch for next instructino that you'll end up writing for this ICE).
+
+
+
             // new program typed in; open an existing program, etc. Instructions are put into GUI editor.
             // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
             // ^ Don't worry about how you're going to index the correct machine code character(s) to change - just put the entire code segment into the GUI, then let the form component word-wrap it. You can send the whole thing forwards/back if you want into the Loader in memory, or come up with a fancier way of indexing it if you want.
