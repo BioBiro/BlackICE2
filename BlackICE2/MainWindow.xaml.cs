@@ -82,6 +82,8 @@ namespace BlackICE2
             lbix3.Content = "40";
             listBox.Items.Add(lbix3);
 
+            listBox.SelectedIndex = 0;
+
             // entryPoint assumed to be 0.
 
 
@@ -111,11 +113,10 @@ namespace BlackICE2
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Singleton.GetSingleton().human.loader.Step(Singleton.GetSingleton().computer);
-            //listBox1.SelectedIndex += 1;
+            
 
 
-
-            listBox.SelectedIndex += 1;
+            listBox.SelectedIndex += Singleton.GetSingleton().human.loader.i;
 
 
 
