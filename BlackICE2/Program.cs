@@ -8,14 +8,16 @@ namespace BlackICE2
 {
     public class Program
     {
-        //public int entryPoint;
-
-        public List<byte> codeSegment;
+        public int entryPoint;
+        
+        public List<byte> dataSegment;
+        public List<byte> codeSegment;        
 
 
 
         public Program()
-        {
+        {            
+            this.dataSegment = new List<byte>();
             this.codeSegment = new List<byte>();
         }
     }

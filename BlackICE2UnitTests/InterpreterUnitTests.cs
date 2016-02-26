@@ -7,7 +7,7 @@ namespace BlackICE2UnitTests
     public class InterpreterUnitTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestInterpreter()
         {
         }
     }

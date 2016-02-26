@@ -16,15 +16,31 @@ namespace BlackICE2
 
             // skip entry point stuff
 
-            // skip loading data segment into memory
+
+
+            int nextLoadPoint = 8; // 8-byte stack reservation.
+
+            // Load the data segment into memory.
+            for (int i = 0; i < program.dataSegment.Count; i++)
+            {
+                computer.memory.virtualAddressSpace[i + nextLoadPoint] = program.dataSegment[i];
+            }
+
+            nextLoadPoint += program.dataSegment.Count;
 
 
 
             // Load the code segment into memory.
             for (int i = 0; i < program.codeSegment.Count; i++)
             {
-                computer.memory.virtualAddressSpace[i] = program.codeSegment[i];
+                // stack (grows downwards to data/code).
+                computer.memory.virtualAddressSpace[i + nextLoadPoint] = program.codeSegment[i];
             }
+
+
+
+            // Set IP (instruction pointer) to entry point.
+            this.i = program.entryPoint;
         }
 
 

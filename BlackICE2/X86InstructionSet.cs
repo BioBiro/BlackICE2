@@ -90,5 +90,15 @@ namespace BlackICE2
 
             // Flags?
         }
+
+
+
+        // todo PUSH
+        // todo POP
+        // todo MOV REG ADDR
+        // todo MOV ADDR LIT
+        // todo CALL
+        // todo RET
+        // todo JE
     }
 }

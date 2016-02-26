@@ -13,7 +13,7 @@ namespace BlackICE2
             // * Memory. *
             this.virtualAddressSpace = new List<byte>(); // Can give it a capacity here if you wish.
 
-            for (int i = 0; i < 32; i++) // todo, pick a constant? A 32-byte stack will overflow fairly quickly...
+            for (int i = 0; i < 32; i++) // todo, pick a constant? This has to include data and code segments, as well as stack on top growing downwards!
             {
                 this.virtualAddressSpace.Add(new byte { });
             }
