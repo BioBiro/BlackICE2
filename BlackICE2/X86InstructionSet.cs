@@ -64,6 +64,14 @@ namespace BlackICE2
 
 
 
+        // todo MOV REG ADDR
+
+
+
+        // todo MOV ADDR LIT
+
+
+
         public void _40() // INC EAX
         {
             byte[] sValue;
@@ -93,12 +101,31 @@ namespace BlackICE2
 
 
 
-        // todo PUSH
-        // todo POP
-        // todo MOV REG ADDR
-        // todo MOV ADDR LIT
-        // todo CALL
-        // todo RET
         // todo JE
+        // opcode is '0f 84'?
+
+
+
+        public void _6A(byte[] value) // PUSH
+        {
+        }
+
+
+
+        public void _58(byte[] destination) // POP EAX
+        {
+        }
+
+
+
+        public void _E8(byte[] destination) // CALL
+        {
+        }
+
+
+
+        public void _C3() // RET
+        {
+        }
     }
 }
