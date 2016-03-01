@@ -48,5 +48,12 @@ namespace BlackICE2
         {
             this.registers[register][0] = value[0];
         }
+
+
+
+        public void DecrementStackPointer()
+        {
+            this.SetRegister(stackPointerConst, 0, (this.GetRegister(stackPointerConst, 0) - 1));
+        }
     }
 }

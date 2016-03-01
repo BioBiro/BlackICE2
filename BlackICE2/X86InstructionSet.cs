@@ -106,8 +106,25 @@ namespace BlackICE2
 
 
 
-        public void _6A(byte[] value) // PUSH
+        public void _6A(byte[] value) // PUSH literal
         {
+        }
+
+
+
+        public void _50() // PUSH EAX
+        {
+            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
+
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+
+            byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister(0, 0); // Get value in EAX.
+            
+            // Push value onto stack.
+            parentComputer.memory.virtualAddressSpace[stackPointer] = bytes[0];
+            // + 1
+            // + 2
+            // + 3
         }
 
 
