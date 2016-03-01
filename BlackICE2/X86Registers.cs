@@ -13,6 +13,14 @@ namespace BlackICE2
 
 
 
+        public enum RegisterPointers // These are used for indexing.
+        {
+            ACCUMULATOR,
+            STACK_POINTER
+        }
+        
+        
+        
         Dictionary<int, byte[]> registers;
 
 
@@ -25,7 +33,10 @@ namespace BlackICE2
 
 
             // General purpose registers.
-            this.registers.Add((int)(0), new byte[4]); // Can initialize to zero here if required...
+            this.registers.Add((int)((int)(RegisterPointers.ACCUMULATOR)), new byte[4]); // Can initialize to zero here if required...
+
+            // Stack pointer.
+            this.registers.Add((int)((int)(RegisterPointers.STACK_POINTER)), new byte[4]); // Can initialize to zero here if required...
 
 
 
@@ -51,9 +62,24 @@ namespace BlackICE2
 
 
 
-        public void DecrementStackPointer()
+        public void IncrementStackPointer() // todo needs bytes (cpu architechture) as parameter?
         {
-            this.SetRegister(stackPointerConst, 0, (this.GetRegister(stackPointerConst, 0) - 1));
+            int stackPointer = BitConverter.ToInt32(this.GetRegister((int)(RegisterPointers.STACK_POINTER), 0), 0) + 1;
+
+            byte[] stackPointerBytes = BitConverter.GetBytes(stackPointer);
+
+            this.SetRegister((int)(RegisterPointers.STACK_POINTER), 0, stackPointerBytes);
+        }
+
+
+
+        public void DecrementStackPointer() // todo needs bytes (cpu architechture) as parameter?
+        {
+            int stackPointer = BitConverter.ToInt32(this.GetRegister((int)(RegisterPointers.STACK_POINTER), 0), 0) - 1;
+
+            byte[] stackPointerBytes = BitConverter.GetBytes(stackPointer);
+
+            this.SetRegister((int)(RegisterPointers.STACK_POINTER), 0, stackPointerBytes);
         }
     }
 }

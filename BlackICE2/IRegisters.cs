@@ -9,7 +9,9 @@ namespace BlackICE2
     public interface IRegisters
     {
         byte[] GetRegister(int register, int segment);
-
         void SetRegister(int register, int segment, byte[] value);
+
+        void IncrementStackPointer();        
+        void DecrementStackPointer();
     }
 }

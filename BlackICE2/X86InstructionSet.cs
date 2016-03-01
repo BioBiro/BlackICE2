@@ -108,6 +108,15 @@ namespace BlackICE2
 
         public void _6A(byte[] value) // PUSH literal
         {
+            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
+
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            
+            // Push value onto stack.
+            parentComputer.memory.virtualAddressSpace[stackPointer] = value[0];
+            // + 1
+            // + 2
+            // + 3
         }
 
 
@@ -131,6 +140,24 @@ namespace BlackICE2
 
         public void _58(byte[] destination) // POP EAX
         {
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+
+            byte[] bytes = new byte[4]; // todo - fill to size of CPU architechture.;
+
+            bytes[0] = parentComputer.memory.virtualAddressSpace[stackPointer];
+            // + 1
+            // + 2
+            // + 3
+
+            parentComputer.cPU.GetRegisters().SetRegister(0, 0, bytes);
+
+            // Clear stack area where data was popped-off.
+            parentComputer.memory.virtualAddressSpace[stackPointer] = 0;
+            // + 1
+            // + 2
+            // + 3
+
+            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
 
 
