@@ -101,8 +101,12 @@ namespace BlackICE2
 
 
 
-        // todo JE
-        // opcode is '0f 84'?
+        public void _E9(byte[] destination) // JMP
+        {
+            int iLocation = BitConverter.ToInt32(destination, 0) - 1;
+            
+            parentComputer.cPU.GetRegisters().SetRegister(0, 0, BitConverter.GetBytes(iLocation));
+        }
 
 
 
@@ -162,14 +166,37 @@ namespace BlackICE2
 
 
 
-        public void _E8(byte[] destination) // CALL
-        {
+        public void _E8(byte[] destination) // CALL. Note, this is implemented as a PUSH then a JMP.
+        {            
+            byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister(instructionPointerConst, 0); // Save instruction pointer...
+
+            this._6A(bytes); // ... on the stack.
+
+            this._E9(destination); // Now jump to the location.
         }
 
 
 
         public void _C3() // RET
         {
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+
+            byte[] bytes = new byte[4]; // todo - fill to size of CPU architechture.;
+
+            bytes[0] = parentComputer.memory.virtualAddressSpace[stackPointer];
+            // + 1
+            // + 2
+            // + 3
+
+            parentComputer.cPU.GetRegisters().SetRegister(instructionPointerConst, 0, bytes);
+
+            // Clear stack area where data was popped-off.
+            parentComputer.memory.virtualAddressSpace[stackPointer] = 0;
+            // + 1
+            // + 2
+            // + 3
+
+            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
     }
 }
