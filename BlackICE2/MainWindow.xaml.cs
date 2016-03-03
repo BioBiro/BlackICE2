@@ -95,6 +95,8 @@ namespace BlackICE2
                 p.codeSegment.Add( BitConverter.GetBytes(int32)[0]); // First byte only (8-bits).
             }
 
+            p.entryPoint = (int)(sliderEntryPointer.Value);
+
             Singleton.GetSingleton().human.loader.Load(Singleton.GetSingleton().computer, p);
 
 
@@ -113,14 +115,14 @@ namespace BlackICE2
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Singleton.GetSingleton().human.loader.Step(Singleton.GetSingleton().computer);
-            
-
-
-            listBox.SelectedIndex += Singleton.GetSingleton().human.loader.i;
 
 
 
-            byte[] modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister(0, 0), 4);
+            listBox.SelectedIndex += (Singleton.GetSingleton().human.loader.i - (int)(sliderEntryPointer.Value));
+
+
+
+            byte[] modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0), 4);
             int inced = BitConverter.ToInt32(modsvalue, 0);
 
             label1.Content = inced.ToString();

@@ -16,7 +16,7 @@ namespace BlackICE2
 
 
         public Program()
-        {            
+        {
             this.dataSegment = new List<byte>();
             this.codeSegment = new List<byte>();
         }

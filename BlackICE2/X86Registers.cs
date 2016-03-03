@@ -16,7 +16,8 @@ namespace BlackICE2
         public enum RegisterPointers // These are used for indexing.
         {
             ACCUMULATOR,
-            STACK_POINTER
+            STACK_POINTER,
+            INSTRUCTION_POINTER
         }
         
         
@@ -38,14 +39,13 @@ namespace BlackICE2
             // Stack pointer.
             this.registers.Add((int)((int)(RegisterPointers.STACK_POINTER)), new byte[4]); // Can initialize to zero here if required...
 
-
-
-
+            // Instruction pointer.
+            this.registers.Add((int)((int)(RegisterPointers.INSTRUCTION_POINTER)), new byte[4]); // Can initialize to zero here if required...
         }
 
 
 
-        public byte[] GetRegister(int register, int segment)
+        public byte[] GetRegister(int register, int segment) // todo Can't the register parameter be the RegisterPointer enum type instead?
         {
             byte[] rBytes = new byte[1];
 
@@ -55,7 +55,8 @@ namespace BlackICE2
         }
 
 
-        public void SetRegister(int register, int segment, byte[] value)
+
+        public void SetRegister(int register, int segment, byte[] value) // todo Can't the register parameter be the RegisterPointer enum type instead?
         {
             this.registers[register][0] = value[0];
         }

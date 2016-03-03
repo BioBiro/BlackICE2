@@ -64,11 +64,50 @@ namespace BlackICE2
 
 
 
-        // todo MOV REG ADDR
+        public void _XX(byte[] source) // todo rename method with correct opcode - MOV REG, ADDR
+        {
+            // *** NOTE - THIS IS DIRECT ADDRESSING, NOT INDIRECT (just shove the source[] value into the register for INDIRECT!) ***
+            // Grab the value of the destination register, so you can find out how big the amount of data to transfer should be. TODO you should have a neater way of doing this than a 'dummy grab'.
+            int iSizeOfDestinationRegister = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0).Length;
 
 
 
-        // todo MOV ADDR LIT
+            // Look address up and get the value out of memory.
+            Int32 iStartOfAddress = BitConverter.ToInt32(source, 0);
+
+            byte[] bytesToSaveToRegister = new byte[iSizeOfDestinationRegister]; // Set to size of register.
+
+            for (int i = 0; i < bytesToSaveToRegister.Length; i++)
+            {
+                bytesToSaveToRegister[i] = this.parentComputer.memory.virtualAddressSpace[i + iStartOfAddress];
+            }
+
+
+
+            // Now you can save the bytes from memory into the destination register.
+            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0, bytesToSaveToRegister);
+        }
+
+
+
+        public void _ZZ(byte[] destination, byte[] source) // todo todo rename method with correct opcode - MOV ADDR LIT
+        {
+            // Get the size of the literal, so you know how many bytes to write to memory.
+            int iSizeOfLiteral = source.Length;
+
+
+
+            // Get the start address of the memory location.
+            int iStartOfAddress = BitConverter.ToInt32(destination, 0);
+
+
+
+            // Copy the bytes from the literal value to the memory location.
+            for (int i = 0; i < iSizeOfLiteral; i++)
+            {
+                this.parentComputer.memory.virtualAddressSpace[i + iStartOfAddress] = source[i];
+            }
+        }
 
 
 
@@ -78,7 +117,7 @@ namespace BlackICE2
 
 
             // * Get reference to source register. *
-            sValue = parentComputer.cPU.GetRegisters().GetRegister(0, 0);
+            sValue = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0);
 
 
 
@@ -114,7 +153,7 @@ namespace BlackICE2
         {
             parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
 
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
             
             // Push value onto stack.
             parentComputer.memory.virtualAddressSpace[stackPointer] = value[0];
@@ -129,9 +168,9 @@ namespace BlackICE2
         {
             parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
 
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
 
-            byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister(0, 0); // Get value in EAX.
+            byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0); // Get value in EAX.
             
             // Push value onto stack.
             parentComputer.memory.virtualAddressSpace[stackPointer] = bytes[0];
@@ -144,7 +183,7 @@ namespace BlackICE2
 
         public void _58(byte[] destination) // POP EAX
         {
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
 
             byte[] bytes = new byte[4]; // todo - fill to size of CPU architechture.;
 
@@ -167,8 +206,8 @@ namespace BlackICE2
 
 
         public void _E8(byte[] destination) // CALL. Note, this is implemented as a PUSH then a JMP.
-        {            
-            byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister(instructionPointerConst, 0); // Save instruction pointer...
+        {
+            byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0); // Save instruction pointer...
 
             this._6A(bytes); // ... on the stack.
 
@@ -179,7 +218,7 @@ namespace BlackICE2
 
         public void _C3() // RET
         {
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister(0, 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
 
             byte[] bytes = new byte[4]; // todo - fill to size of CPU architechture.;
 
@@ -188,7 +227,7 @@ namespace BlackICE2
             // + 2
             // + 3
 
-            parentComputer.cPU.GetRegisters().SetRegister(instructionPointerConst, 0, bytes);
+            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0, bytes);
 
             // Clear stack area where data was popped-off.
             parentComputer.memory.virtualAddressSpace[stackPointer] = 0;
