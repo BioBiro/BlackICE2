@@ -70,7 +70,7 @@ namespace BlackICE2
             //Singleton.GetSingleton().human.PrepareProgram(Singleton.GetSingleton().computer, mahProgram);
 
             // shove virtual address space into GUI.
-            ListBoxItem lbix1 = new ListBoxItem();
+            /*ListBoxItem lbix1 = new ListBoxItem();
             lbix1.Content = "184";
             listBox.Items.Add(lbix1);
 
@@ -97,7 +97,7 @@ namespace BlackICE2
 
             p.entryPoint = (int)(sliderEntryPointer.Value);
 
-            Singleton.GetSingleton().human.loader.Load(Singleton.GetSingleton().computer, p);
+            Singleton.GetSingleton().human.loader.Load(Singleton.GetSingleton().computer, p);*/
 
 
             // really useful --> https://defuse.ca/online-x86-assembler.htm
@@ -118,7 +118,7 @@ namespace BlackICE2
 
 
 
-            listBox.SelectedIndex += (Singleton.GetSingleton().human.loader.i - (int)(sliderEntryPointer.Value));
+            listBox.SelectedIndex += (Singleton.GetSingleton().human.loader.line - (int)(sliderEntryPointer.Value));
 
 
 

@@ -40,21 +40,21 @@ namespace BlackICE2
 
 
             // Set IP (instruction pointer) to entry point.
-            this.i = program.entryPoint;
+            this.line = program.entryPoint;
         }
 
 
 
-        public int i { get; set; }
+        public int line { get; set; }
 
         public void Step(Computer computer)
         {
             // Run the program.
             //for (i = 0; i < computer.memory.virtualAddressSpace.Count; i++)
             //{
-            ExecuteOpcode(computer, computer.memory.virtualAddressSpace[i]);
-                        
-            this.i += ToSkip(computer.memory.virtualAddressSpace[i]); // Get next opcode to instruction ready to read.
+            ExecuteOpcode(computer, computer.memory.virtualAddressSpace[line]);
+
+            this.line += ToSkip(computer.memory.virtualAddressSpace[line]); // Get next opcode to instruction ready to read.
         }
 
 
@@ -85,7 +85,7 @@ namespace BlackICE2
             // Turn 32-bit instruction opcode into instruction opcode.
 
             // Prep for 'reflective invoke' :-).
-            string methodName = "_" + computer.memory.virtualAddressSpace[i];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
+            string methodName = "_" + computer.memory.virtualAddressSpace[line];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
 
             MethodInfo info = reflectionType.GetMethod(methodName);
             ParameterInfo[] parameterInfos = info.GetParameters();
@@ -95,7 +95,7 @@ namespace BlackICE2
                 byte[] parameters = new byte[0];
 
                 Array.Resize(ref parameters, parameters.Count() + 1);
-                parameters[parameters.Count() - 1] = computer.memory.virtualAddressSpace[i + 1]; // Next byte is opcode's needed parameter.                                  
+                parameters[parameters.Count() - 1] = computer.memory.virtualAddressSpace[line + 1]; // Next byte is opcode's needed parameter.                                  
 
                 X86InstructionSet instructions = new X86InstructionSet(computer); // todo <-- X86 forced - needs to use IInstructionSet inteface! <-- horrible hack creating a new instruction set on the fly, here... //computer.cPU.instructionSet;                                                                                    
 
