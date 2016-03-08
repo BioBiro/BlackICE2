@@ -59,7 +59,7 @@ namespace BlackICE2
             sValue = source;
 
             // * Get reference to destination register. *
-            parentComputer.cPU.GetRegisters().SetRegister(0, 0, sValue);
+            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0, sValue);
         }
 
 
@@ -131,7 +131,7 @@ namespace BlackICE2
 
 
             // Set the increased value in place. (Byte array size will always be the same source-to-destinatino, since there's only one operand.)
-            parentComputer.cPU.GetRegisters().SetRegister(0, 0, incedb); // this shoves the 32-bit/4 byte value in, rather than the 1 byte/8bit value at obtained with GetRegister at the start of this method.
+            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0, incedb); // this shoves the 32-bit/4 byte value in, rather than the 1 byte/8bit value at obtained with GetRegister at the start of this method.
 
 
 
@@ -143,8 +143,8 @@ namespace BlackICE2
         public void _E9(byte[] destination) // JMP
         {
             int iLocation = BitConverter.ToInt32(destination, 0) - 1;
-            
-            parentComputer.cPU.GetRegisters().SetRegister(0, 0, BitConverter.GetBytes(iLocation));
+
+            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0, BitConverter.GetBytes(iLocation));
         }
 
 
@@ -192,7 +192,7 @@ namespace BlackICE2
             // + 2
             // + 3
 
-            parentComputer.cPU.GetRegisters().SetRegister(0, 0, bytes);
+            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0, bytes);
 
             // Clear stack area where data was popped-off.
             parentComputer.memory.virtualAddressSpace[stackPointer] = 0;
