@@ -33,6 +33,17 @@ namespace BlackICE2
 
 
 
+        public byte[] PadWithBytes(byte input, int bytesToPad)
+        {
+            byte[] output = new byte[bytesToPad];
+
+            output[0] = input;
+
+            return output;
+        }
+
+
+
         public byte[] PadWithBytes(byte[] inputArray, int bytesToPad)
         {
             if (inputArray.Length < bytesToPad)

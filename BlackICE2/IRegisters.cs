@@ -11,7 +11,7 @@ namespace BlackICE2
         byte[] GetRegister(int register, int segment);
         void SetRegister(int register, int segment, byte[] value);
 
-        void IncrementStackPointer();        
+        void IncrementStackPointer();
         void DecrementStackPointer();
     }
 }

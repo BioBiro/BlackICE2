@@ -64,6 +64,16 @@ namespace BlackICE2
 
 
 
+        public void _89(byte[] destination) // register-to-register - parameter specifies destination register (no idea why x86 implements it this way...)
+        {
+            if (destination == new byte[] { 195, 0, 0, 0 }) // MOV EBX, EAX
+            {
+
+            }
+        }
+
+
+
         public void _XX(byte[] source) // todo rename method with correct opcode - MOV REG, ADDR
         {
             // *** NOTE - THIS IS DIRECT ADDRESSING, NOT INDIRECT (just shove the source[] value into the register for INDIRECT!) ***
@@ -140,34 +150,32 @@ namespace BlackICE2
 
 
 
-        public void _E9(byte[] destination) // JMP
+        public void _233(byte[] destination) // JMP
         {
-            int iLocation = BitConverter.ToInt32(destination, 0) - 1;
+            int iLocation = destination[0] - 1;
 
-            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0, BitConverter.GetBytes(iLocation));
+            parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0, BitConverter.GetBytes(iLocation));
         }
 
 
 
-        public void _6A(byte[] value) // PUSH literal
+        public void _106(byte[] value) // PUSH literal
         {
-            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
-
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            int stackPointer = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0)[0];//stackPointerConst, 0); // Get stack pointer.
             
             // Push value onto stack.
             parentComputer.memory.virtualAddressSpace[stackPointer] = value[0];
             // + 1
             // + 2
             // + 3
+
+            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
 
 
 
         public void _50() // PUSH EAX
         {
-            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
-
             int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
 
             byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0); // Get value in EAX.
@@ -177,6 +185,8 @@ namespace BlackICE2
             // + 1
             // + 2
             // + 3
+
+            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
 
 
@@ -200,23 +210,23 @@ namespace BlackICE2
             // + 2
             // + 3
 
-            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
+            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
         }
 
 
 
-        public void _E8(byte[] destination) // CALL. Note, this is implemented as a PUSH then a JMP.
+        public void _232(byte[] destination) // CALL. Note, this is implemented as a PUSH then a JMP.
         {
             byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0); // Save instruction pointer...
 
-            this._6A(bytes); // ... on the stack.
+            this._106(bytes); // ... on the stack.
 
-            this._E9(destination); // Now jump to the location.
+            this._233(destination); // Now jump to the location.
         }
 
 
 
-        public void _C3() // RET
+        public void _195() // RET
         {
             int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
 
@@ -235,7 +245,7 @@ namespace BlackICE2
             // + 2
             // + 3
 
-            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
+            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
         }
     }
 }

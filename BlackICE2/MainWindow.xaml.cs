@@ -33,18 +33,42 @@ namespace BlackICE2
             // new program typed in; open an existing program, etc. Instructions are put into GUI editor.
             // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
             // ^ Don't worry about how you're going to index the correct machine code character(s) to change - just put the entire code segment into the GUI, then let the form component word-wrap it. You can send the whole thing forwards/back if you want into the Loader in memory, or come up with a fancier way of indexing it if you want.
-            /*ListBoxItem lbi = new ListBoxItem();
-            lbi.Content = "mov eax, 7";
+            ListBoxItem lbi = new ListBoxItem();
+            lbi.Content = "mov eax, 10";
             lbi.MouseDoubleClick += _MouseLeftButtonDown;
-
             listBox1.Items.Add(lbi);
 
             ListBoxItem lbi2 = new ListBoxItem();
-            lbi2.Content = "inc eax";
+            lbi2.Content = "call @@myfunction";
             lbi2.MouseDoubleClick += _MouseLeftButtonDown;
             listBox1.Items.Add(lbi2);
 
-            listBox1.SelectedIndex = 0;*/
+            ListBoxItem lbi3 = new ListBoxItem();
+            lbi3.Content = "inc eax";
+            lbi3.MouseDoubleClick += _MouseLeftButtonDown;
+            listBox1.Items.Add(lbi3);
+
+            ListBoxItem lbi4 = new ListBoxItem();
+            lbi4.Content = "inc eax";
+            lbi4.MouseDoubleClick += _MouseLeftButtonDown;
+            listBox1.Items.Add(lbi4);
+
+            ListBoxItem lbi5 = new ListBoxItem();
+            lbi5.Content = "@@myfunction";
+            lbi5.MouseDoubleClick += _MouseLeftButtonDown;
+            listBox1.Items.Add(lbi5);
+
+            ListBoxItem lbi6 = new ListBoxItem();
+            lbi6.Content = "mov ebx, eax";
+            lbi6.MouseDoubleClick += _MouseLeftButtonDown;
+            listBox1.Items.Add(lbi6);
+
+            ListBoxItem lbi7 = new ListBoxItem();
+            lbi7.Content = "ret";
+            lbi7.MouseDoubleClick += _MouseLeftButtonDown;
+            listBox1.Items.Add(lbi7);
+
+            listBox1.SelectedIndex = 0;
 
 
 
@@ -55,19 +79,20 @@ namespace BlackICE2
 
             Singleton.GetSingleton().human = new Human();
 
-            //List<string> MatthewsProgram = new List<string>();
+            List<string> MatthewsProgram = new List<string>();
 
-            /*foreach (ListBoxItem listBoxItem in listBox1.Items)
+            foreach (ListBoxItem listBoxItem in listBox1.Items)
             {
                 MatthewsProgram.Add(listBoxItem.Content as string);
-            }*/
+            }
 
-            // skipped as we are testing direct machine code below --> Program mahProgram = Singleton.GetSingleton().human.CreateProgram(Singleton.GetSingleton().computer, MatthewsProgram);
+            // skipped as we are testing direct machine code below --> 
+            Program mahProgram = Singleton.GetSingleton().human.CreateProgram(Singleton.GetSingleton().computer, MatthewsProgram);
 
 
 
             // Now load the program into the computer/CPU.
-            //Singleton.GetSingleton().human.PrepareProgram(Singleton.GetSingleton().computer, mahProgram);
+            Singleton.GetSingleton().human.PrepareProgram(Singleton.GetSingleton().computer, mahProgram);
 
             // shove virtual address space into GUI.
             /*ListBoxItem lbix1 = new ListBoxItem();
@@ -118,14 +143,31 @@ namespace BlackICE2
 
 
 
-            listBox.SelectedIndex += (Singleton.GetSingleton().human.loader.line - (int)(sliderEntryPointer.Value));
+            listBox.SelectedIndex += (Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0] - (int)(sliderEntryPointer.Value));
 
 
 
             byte[] modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0), 4);
             int inced = BitConverter.ToInt32(modsvalue, 0);
-
             label1.Content = inced.ToString();
+
+
+
+            modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.BASE), 0), 4);
+            inced = BitConverter.ToInt32(modsvalue, 0);
+            label2.Content = inced.ToString();
+
+
+
+            modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 4);
+            inced = BitConverter.ToInt32(modsvalue, 0);
+            label3.Content = inced.ToString();
+
+
+
+            modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0), 4);
+            inced = BitConverter.ToInt32(modsvalue, 0);
+            label4.Content = inced.ToString();
         }
     }
 }

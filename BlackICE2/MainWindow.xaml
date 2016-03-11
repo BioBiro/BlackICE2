@@ -12,7 +12,13 @@
         <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="194,10,0,0" VerticalAlignment="Top"/>
         <Button x:Name="button" Content="Step" HorizontalAlignment="Left" Margin="165,293,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="303" Margin="357,10,0,0" VerticalAlignment="Top" Width="150"/>
-        <Slider x:Name="sliderEntryPointer" HorizontalAlignment="Left" Margin="184,104,0,0" VerticalAlignment="Top" Width="113" Maximum="8" Value="8"/>
+        <Slider x:Name="sliderEntryPointer" HorizontalAlignment="Left" Margin="208,213,0,0" VerticalAlignment="Top" Width="113" Maximum="8" Value="8"/>
+        <Label Content="EBX" HorizontalAlignment="Left" Margin="165,38,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="194,38,0,0" VerticalAlignment="Top"/>
+        <Label Content="SP" HorizontalAlignment="Left" Margin="167,66,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label3" Content="Label" HorizontalAlignment="Left" Margin="194,66,0,0" VerticalAlignment="Top"/>
+        <Label Content="IP" HorizontalAlignment="Left" Margin="167,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label4" Content="Label" HorizontalAlignment="Left" Margin="194,94,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

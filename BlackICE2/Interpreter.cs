@@ -22,7 +22,13 @@ namespace BlackICE2
             // Just convert mov eax, 7 and inc eax to machine code and return it, for now...
 
             //return new List<byte>() { 0 };
-            return new List<byte>() { 184, 07, 40 };
+            return new List<byte>() { 184, 10 // mov eax, 10
+                                    , 232, 14 // call @@myfunction - opcode 14 (6 with 8 byte stack push downwards)
+                                    , 40 // inc eax
+                                    , 40 // inc eax
+                                    //, label - doesnt get assembled into machine code, as replaced label CALLs with memory addresses // @@myfunction
+                                    , 89, 195 // mov ebx, eax
+                                    , 195 }; // ret                                    
         }
 
 

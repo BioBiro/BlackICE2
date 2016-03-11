@@ -40,21 +40,30 @@ namespace BlackICE2
 
 
             // Set IP (instruction pointer) to entry point.
-            this.line = program.entryPoint;
+            computer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0, Helper.GetHelper().PadWithBytes((byte)(program.entryPoint), 4));
         }
 
 
 
-        public int line { get; set; }
+        //public int line { get; set; }
 
         public void Step(Computer computer)
         {
             // Run the program.
             //for (i = 0; i < computer.memory.virtualAddressSpace.Count; i++)
             //{
-            ExecuteOpcode(computer, computer.memory.virtualAddressSpace[line]);
+                        
+            
+            
+            //ExecuteOpcode(computer, computer.memory.virtualAddressSpace[line]);
+            int castedIP = computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
 
-            this.line += ToSkip(computer.memory.virtualAddressSpace[line]); // Get next opcode to instruction ready to read.
+            ExecuteOpcode(computer, computer.memory.virtualAddressSpace[castedIP]);
+
+            //this.line += ToSkip(computer.memory.virtualAddressSpace[castedIP]); // Get next opcode to instruction ready to read.
+            int toSkip = ToSkip(computer.memory.virtualAddressSpace[castedIP]);
+            int toSkip2 = toSkip + computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
+            computer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0, Helper.GetHelper().PadWithBytes((byte)(toSkip2), 4)); // Get next opcode to instruction ready to read.
         }
 
 
@@ -85,6 +94,7 @@ namespace BlackICE2
             // Turn 32-bit instruction opcode into instruction opcode.
 
             // Prep for 'reflective invoke' :-).
+            int line = computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
             string methodName = "_" + computer.memory.virtualAddressSpace[line];//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
 
             MethodInfo info = reflectionType.GetMethod(methodName);
