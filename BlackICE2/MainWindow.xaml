@@ -5,25 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlackICE2"
         mc:Ignorable="d"
-        Title="BlackICE2" Height="522" Width="544" ResizeMode="CanMinimize">
+        Title="BlackICE2" Height="592" Width="544" ResizeMode="CanMinimize">
     <Grid Margin="0,0,-6,5">
-        <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="303" Margin="10,73,0,0" VerticalAlignment="Top" Width="150" IsHitTestVisible="False"/>
-        <Label x:Name="label" Content="EAX" HorizontalAlignment="Left" Margin="163,66,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="192,66,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Step" HorizontalAlignment="Left" Margin="165,293,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <Slider x:Name="sliderEntryPointer" HorizontalAlignment="Left" Margin="208,213,0,0" VerticalAlignment="Top" Width="113" Maximum="8" Value="8"/>
-        <Label Content="EBX" HorizontalAlignment="Left" Margin="269,73,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="298,73,0,0" VerticalAlignment="Top"/>
-        <Label Content="SP" HorizontalAlignment="Left" Margin="167,85,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label3" Content="Label" HorizontalAlignment="Left" Margin="194,85,0,0" VerticalAlignment="Top"/>
-        <Label Content="IP" HorizontalAlignment="Left" Margin="278,92,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label4" Content="Label" HorizontalAlignment="Left" Margin="303,99,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="listBox2" HorizontalAlignment="Left" Height="430" Margin="378,62,0,0" VerticalAlignment="Top" Width="148"/>
+        <Button x:Name="button" Content="Step" HorizontalAlignment="Left" Margin="215,220,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Slider x:Name="sliderEntryPointer" HorizontalAlignment="Left" Margin="203,164,0,0" VerticalAlignment="Top" Width="113" Maximum="8" Value="8"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="538">
             <MenuItem Header="File" Margin="0">
                 <MenuItem Header="Open" HorizontalAlignment="Left" Width="85" Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
+        <GroupBox x:Name="groupBox" Header="Assembly" HorizontalAlignment="Left" Height="200" Margin="10,25,0,0" VerticalAlignment="Top" Width="180">
+            <Grid HorizontalAlignment="Left" Height="190" VerticalAlignment="Top" Width="170" Margin="0,0,-2,-8">
+                <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="163" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" IsHitTestVisible="False"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupBox1" Header="Memory" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="179" Height="465">
+            <Grid HorizontalAlignment="Left" Height="455" VerticalAlignment="Top" Width="169" Margin="0,0,-2,-8">
+                <ListBox x:Name="listBox2" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="148"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupBox2" Header="Registers" HorizontalAlignment="Left" Margin="56,300,0,0" VerticalAlignment="Top" Height="205" Width="260">
+            <Grid HorizontalAlignment="Left" Height="195" VerticalAlignment="Top" Width="250" Margin="0,0,-2,-8">
+                <Label x:Name="label" Content="EAX" HorizontalAlignment="Left" Margin="49,28,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="88,28,0,0" VerticalAlignment="Top"/>
+                <Label Content="EBX" HorizontalAlignment="Left" Margin="39,102,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label2" Content="Label" HorizontalAlignment="Left" Margin="63,102,0,0" VerticalAlignment="Top"/>
+                <Label Content="SP" HorizontalAlignment="Left" Margin="61,61,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label3" Content="Label" HorizontalAlignment="Left" Margin="88,61,0,0" VerticalAlignment="Top"/>
+                <Label Content="IP" HorizontalAlignment="Left" Margin="43,125,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label4" Content="Label" HorizontalAlignment="Left" Margin="68,128,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
 
     </Grid>
 </Window>
