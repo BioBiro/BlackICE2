@@ -39,7 +39,8 @@ namespace BlackICE2
             this.registers.Add((int)((int)(RegisterPointers.BASE)), new byte[4]); // Can initialize to zero here if required...
 
             // Stack pointer.
-            this.registers.Add((int)((int)(RegisterPointers.STACK_POINTER)), new byte[4]); // Can initialize to zero here if required...
+            this.registers.Add((int)((int)(RegisterPointers.STACK_POINTER)), new byte[4] { 32, 0, 0, 0 } ); // todo - change const value to something more sensible (bites - 8 * CPU bytes architechture).
+
 
             // Instruction pointer.
             this.registers.Add((int)((int)(RegisterPointers.INSTRUCTION_POINTER)), new byte[4]); // Can initialize to zero here if required...

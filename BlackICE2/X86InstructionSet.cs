@@ -66,9 +66,11 @@ namespace BlackICE2
 
         public void _89(byte[] destination) // register-to-register - parameter specifies destination register (no idea why x86 implements it this way...)
         {
-            if (destination == new byte[] { 195, 0, 0, 0 }) // MOV EBX, EAX
+            if (destination[0] == 195) // MOV EBX, EAX
             {
+                byte[] a = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0);
 
+                parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.BASE), 0, a);
             }
         }
 
@@ -89,7 +91,7 @@ namespace BlackICE2
 
             for (int i = 0; i < bytesToSaveToRegister.Length; i++)
             {
-                bytesToSaveToRegister[i] = this.parentComputer.memory.virtualAddressSpace[i + iStartOfAddress];
+                bytesToSaveToRegister[i] = this.parentComputer.memory.virtualAddressSpace[i + iStartOfAddress].value;
             }
 
 
@@ -115,7 +117,7 @@ namespace BlackICE2
             // Copy the bytes from the literal value to the memory location.
             for (int i = 0; i < iSizeOfLiteral; i++)
             {
-                this.parentComputer.memory.virtualAddressSpace[i + iStartOfAddress] = source[i];
+                this.parentComputer.memory.virtualAddressSpace[i + iStartOfAddress].value = source[i];
             }
         }
 
@@ -161,43 +163,43 @@ namespace BlackICE2
 
         public void _106(byte[] value) // PUSH literal
         {
+            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
+
             int stackPointer = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0)[0];//stackPointerConst, 0); // Get stack pointer.
             
             // Push value onto stack.
-            parentComputer.memory.virtualAddressSpace[stackPointer] = value[0];
+            parentComputer.memory.virtualAddressSpace[stackPointer].value = value[0];
             // + 1
             // + 2
             // + 3
-
-            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
 
 
 
         public void _50() // PUSH EAX
         {
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
+
+            int stackPointer = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0)[0];//stackPointerConst, 0); // Get stack pointer.
 
             byte[] bytes = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0); // Get value in EAX.
             
             // Push value onto stack.
-            parentComputer.memory.virtualAddressSpace[stackPointer] = bytes[0];
+            parentComputer.memory.virtualAddressSpace[stackPointer].value = bytes[0];
             // + 1
             // + 2
             // + 3
-
-            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
 
 
 
-        public void _58(byte[] destination) // POP EAX
+        public void _58() // POP EAX
         {
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            int stackPointer = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0)[0];//stackPointerConst, 0); // Get stack pointer.
 
             byte[] bytes = new byte[4]; // todo - fill to size of CPU architechture.;
 
-            bytes[0] = parentComputer.memory.virtualAddressSpace[stackPointer];
+            bytes[0] = parentComputer.memory.virtualAddressSpace[stackPointer].value;
             // + 1
             // + 2
             // + 3
@@ -205,12 +207,12 @@ namespace BlackICE2
             parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0, bytes);
 
             // Clear stack area where data was popped-off.
-            parentComputer.memory.virtualAddressSpace[stackPointer] = 0;
+            parentComputer.memory.virtualAddressSpace[stackPointer].value = 0;
             // + 1
             // + 2
             // + 3
 
-            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
+            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
 
 
@@ -228,11 +230,11 @@ namespace BlackICE2
 
         public void _195() // RET
         {
-            int stackPointer = BitConverter.ToInt32(parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 0);//stackPointerConst, 0); // Get stack pointer.
+            int stackPointer = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0)[0];//stackPointerConst, 0); // Get stack pointer.
 
             byte[] bytes = new byte[4]; // todo - fill to size of CPU architechture.;
 
-            bytes[0] = parentComputer.memory.virtualAddressSpace[stackPointer];
+            bytes[0] = parentComputer.memory.virtualAddressSpace[stackPointer].value;
             // + 1
             // + 2
             // + 3
@@ -240,12 +242,12 @@ namespace BlackICE2
             parentComputer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0, bytes);
 
             // Clear stack area where data was popped-off.
-            parentComputer.memory.virtualAddressSpace[stackPointer] = 0;
+            parentComputer.memory.virtualAddressSpace[stackPointer].value = 0;
             // + 1
             // + 2
             // + 3
 
-            parentComputer.cPU.GetRegisters().DecrementStackPointer(); // Decrement stack pointer.
+            parentComputer.cPU.GetRegisters().IncrementStackPointer(); // Decrement stack pointer.
         }
     }
 }

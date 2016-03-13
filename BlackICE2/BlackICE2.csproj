@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Address.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Human.cs" />

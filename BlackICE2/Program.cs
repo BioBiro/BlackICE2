@@ -11,14 +11,14 @@ namespace BlackICE2
         public int entryPoint;
         
         public List<byte> dataSegment;
-        public List<byte> codeSegment;        
+        public Tuple<List<byte>, List<int>> codeSegment;        
 
 
 
         public Program()
         {
             this.dataSegment = new List<byte>();
-            this.codeSegment = new List<byte>();
+            //this.codeSegment = new Tuple<List<byte>, List<int>>();
         }
     }
 }
