@@ -41,26 +41,6 @@ namespace BlackICE2
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
-            // Redraw virtual address space
-            listBox2.Items.Clear();
-
-            for (int i = 0; i < Singleton.GetSingleton().computer.memory.virtualAddressSpace.Count; i++)
-            {
-                ListBoxItem lbix = new ListBoxItem();
-                lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
-                //lbix.MouseDoubleClick += _MouseLeftButtonDown;
-                listBox2.Items.Add(lbix);
-            }
-
-
-
-
-
-
-
-
-
             Singleton.GetSingleton().human.loader.Step(Singleton.GetSingleton().computer);
             Computer c = Singleton.GetSingleton().computer; // todo DELET ME
 
@@ -101,6 +81,32 @@ namespace BlackICE2
             modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0), 4);
             inced = BitConverter.ToInt32(modsvalue, 0);
             label4.Content = inced.ToString();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Redraw virtual address space
+            listBox2.Items.Clear();
+
+            for (int i = 0; i < Singleton.GetSingleton().computer.memory.virtualAddressSpace.Count; i++)
+            {
+                ListBoxItem lbix = new ListBoxItem();
+                lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
+                //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+                listBox2.Items.Add(lbix);
+            }
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
