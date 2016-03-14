@@ -88,7 +88,7 @@ namespace BlackICE2
 
 
 
-        public void IncrementInstructionPointer() // todo needs bytes (cpu architechture) as parameter?
+        public void IncrementProgramCounter() // todo needs bytes (cpu architechture) as parameter?
         {
             int instructionPointer = this.GetRegister((int)(RegisterPointers.INSTRUCTION_POINTER), 0)[0] + 1;
 
@@ -99,7 +99,7 @@ namespace BlackICE2
 
 
 
-        public void DecrementInstructionPointer() // todo needs bytes (cpu architechture) as parameter?
+        public void DecrementProgramCounter() // todo needs bytes (cpu architechture) as parameter?
         {
             int instructionPointer = this.GetRegister((int)(RegisterPointers.INSTRUCTION_POINTER), 0)[0] - 1;
 

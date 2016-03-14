@@ -13,5 +13,8 @@ namespace BlackICE2
 
         void IncrementStackPointer();
         void DecrementStackPointer();
+
+        void IncrementProgramCounter();
+        void DecrementProgramCounter();
     }
 }
