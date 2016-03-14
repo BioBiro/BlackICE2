@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackICE2", "BlackICE2\Blac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackICE2UnitTests", "BlackICE2UnitTests\BlackICE2UnitTests.csproj", "{8434C240-8C00-4C72-B0DF-F36B1A82465A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70A1152A-FF0E-416A-99DC-557ADAB49ACA}"
+	ProjectSection(SolutionItems) = preProject
+		crack_w51_icon.ico = crack_w51_icon.ico
+		sample.asm = sample.asm
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
