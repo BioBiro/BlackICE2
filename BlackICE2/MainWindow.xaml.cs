@@ -190,7 +190,7 @@ namespace BlackICE2
                     p.codeSegment.Add( BitConverter.GetBytes(int32)[0]); // First byte only (8-bits).
                 }
 
-                p.entryPoint = (int)(sliderEntryPointer.Value);
+                p.entryPoint = (int)(sliderEntryPointer.Value); <-- textBox replaces this now!
 
                 Singleton.GetSingleton().human.loader.Load(Singleton.GetSingleton().computer, p);*/
             }
