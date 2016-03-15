@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlackICE2"
         mc:Ignorable="d"
-        Title="BlackICE2" Height="529" Width="544" ResizeMode="CanMinimize">
+        Title="BlackICE2" Height="529" Width="544" ResizeMode="CanMinimize" Icon="crack_w51_icon.ico">
     <Grid Margin="0,0,-6,5">
         <Button x:Name="button" Content="Step" HorizontalAlignment="Left" Margin="10,430,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="538">
