@@ -10,7 +10,8 @@
         <Button x:Name="button" Content="Step" HorizontalAlignment="Left" Margin="10,430,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="538">
             <MenuItem Header="File" Margin="0">
-                <MenuItem Header="Open" HorizontalAlignment="Left" Width="85" Click="MenuItem_Click"/>
+                <MenuItem Header="Load Assembly" HorizontalAlignment="Left" Click="MenuItem_Click" Width="130"/>
+                <MenuItem Header="Load Machine Code" HorizontalAlignment="Left" Click="MenuItem_Click_2"/>
             </MenuItem>
         </Menu>
         <GroupBox x:Name="groupBox" Header="Assembly" HorizontalAlignment="Left" Height="202" Margin="10,25,0,0" VerticalAlignment="Top" Width="180">

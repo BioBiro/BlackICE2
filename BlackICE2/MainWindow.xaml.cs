@@ -119,10 +119,6 @@ namespace BlackICE2
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                // It would be neat if you could dissasembler the binary/machine code into assembly instructions, for external files in this program (a dissasembler using the instruction-fetch for next instructino that you'll end up writing for this ICE).
-
-
-
                 // new program typed in; open an existing program, etc. Instructions are put into GUI editor.
                 // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
                 // ^ Don't worry about how you're going to index the correct machine code character(s) to change - just put the entire code segment into the GUI, then let the form component word-wrap it. You can send the whole thing forwards/back if you want into the Loader in memory, or come up with a fancier way of indexing it if you want.
@@ -193,6 +189,24 @@ namespace BlackICE2
                 p.entryPoint = (int)(sliderEntryPointer.Value); <-- textBox replaces this now!
 
                 Singleton.GetSingleton().human.loader.Load(Singleton.GetSingleton().computer, p);*/
+            }
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open))
+                {
+                    // Read bytes from stream and interpret them as ints. Use BinaryReader if you need bytes instead of integers when reading.
+                    int value = 0;
+                    while ((value = fs.ReadByte()) != -1)
+                    {
+                        Console.WriteLine(value);
+                    }
+                }
+                
             }
         }
     }
