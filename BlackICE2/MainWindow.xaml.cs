@@ -42,22 +42,14 @@ namespace BlackICE2
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Singleton.GetSingleton().human.loader.Step(Singleton.GetSingleton().computer);
-            Computer c = Singleton.GetSingleton().computer; // todo DELET ME
+            Computer c = Singleton.GetSingleton().computer; // todo DELETE ME
 
 
 
             int ipx = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
 
             listBox1.SelectedIndex = Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine;// ( - (int)(sliderEntryPointer.Value)) - 1;
-
-
-
-
-
-            listBox2.SelectedIndex = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
-
-
-
+            
 
 
             byte[] modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0), 4);
@@ -84,28 +76,48 @@ namespace BlackICE2
 
 
 
+            RedrawMemory();
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-            // Redraw virtual address space
-            listBox2.Items.Clear();
-
-            for (int i = 0; i < Singleton.GetSingleton().computer.memory.virtualAddressSpace.Count; i++)
+        private void RedrawMemory()
+        {
+            if (Singleton.GetSingleton().computer != null)
             {
-                ListBoxItem lbix = new ListBoxItem();
-                lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
-                //lbix.MouseDoubleClick += _MouseLeftButtonDown;
-                listBox2.Items.Add(lbix);
+
+                if (this.uglyGlobalDirection == 1)
+                {
+                    // Redraw virtual address space
+                    listBox2.Items.Clear();
+
+                    for (int i = 0; i < Singleton.GetSingleton().computer.memory.virtualAddressSpace.Count; i++)
+                    {
+                        ListBoxItem lbix = new ListBoxItem();
+                        lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
+                        //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+                        listBox2.Items.Add(lbix);
+                    }
+
+
+
+                    listBox2.SelectedIndex = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
+                }
+                else if (this.uglyGlobalDirection == 2)
+                {
+                    // Redraw virtual address space
+                    listBox2.Items.Clear();
+
+                    for (int i = Singleton.GetSingleton().computer.memory.virtualAddressSpace.Count - 1; i >= 0; i--)
+                    {
+                        ListBoxItem lbix = new ListBoxItem();
+                        lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
+                        //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+                        listBox2.Items.Add(lbix);
+                    }
+
+
+
+                    listBox2.SelectedIndex = 31 - Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
+                }
             }
         }
 
@@ -114,6 +126,8 @@ namespace BlackICE2
             
         }
 
+
+        
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -190,6 +204,8 @@ namespace BlackICE2
 
                 Singleton.GetSingleton().human.loader.Load(Singleton.GetSingleton().computer, p);*/
             }
+
+            RedrawMemory();
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
@@ -208,6 +224,24 @@ namespace BlackICE2
                 }
                 
             }
+        }
+
+
+
+        int uglyGlobalDirection = 1; // todo Remove.
+
+        private void radioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.uglyGlobalDirection = 1;
+
+            RedrawMemory();
+        }
+
+        private void radioButton1_Checked(object sender, RoutedEventArgs e)
+        {
+            this.uglyGlobalDirection = 2;
+
+            RedrawMemory();
         }
     }
 }

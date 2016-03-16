@@ -23,7 +23,7 @@ namespace BlackICE2
 
             Tuple<List<byte>, List<int>> t = new Tuple<List<byte>, List<int>>(
                    new List<byte>() { 184, 10 // mov eax, 10
-                                    , 232, 16 // call @@myfunction - opcode 14 (6 with 8 byte stack push downwards) <-- NOTICE HOW WE KNOCK THE LABEL'S ADDRESS BACK BY -1 AGAIN (AFTER REMOVING THE DEAD LINE WHERE THE LABEL WAS DEFINED, SO IT'S ACTUALLY A -2).
+                                    , 232, 8 // call @@myfunction - opcode 14 (6 with 8 byte stack push downwards) <-- NOTICE HOW WE KNOCK THE LABEL'S ADDRESS BACK BY -1 AGAIN (AFTER REMOVING THE DEAD LINE WHERE THE LABEL WAS DEFINED, SO IT'S ACTUALLY A -2).
                                     , 40 // inc eax
                                     , 50 // push eax
                                     , 40 // inc eax
@@ -73,7 +73,7 @@ namespace BlackICE2
 
             //programToReturn.data = data;
             programToReturn.codeSegment = codeSegment;
-            programToReturn.entryPoint = 8; // todo --> replace with FindEntryPoint from old BlackICE.
+            programToReturn.entryPoint = 0;//31 - codeSegment.Item1.Count - 2; // todo --> replace with FindEntryPoint from old BlackICE.
 
             return programToReturn;
         }

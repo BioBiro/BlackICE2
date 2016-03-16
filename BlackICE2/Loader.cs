@@ -18,25 +18,26 @@ namespace BlackICE2
 
 
 
-            int nextLoadPoint = 8; // 8-byte stack reservation.
-
-            // Load the data segment into memory.
-            for (int i = 0; i < program.dataSegment.Count; i++)
-            {
-                computer.memory.virtualAddressSpace[i + nextLoadPoint].value = program.dataSegment[i];
-            }
-
-            nextLoadPoint += program.dataSegment.Count;
-
-
-
             // Load the code segment into memory.
             for (int i = 0; i < program.codeSegment.Item1.Count; i++)
             {
                 // stack (grows downwards to data/code).
-                computer.memory.virtualAddressSpace[i + nextLoadPoint].value = program.codeSegment.Item1[i];
-                computer.memory.virtualAddressSpace[i + nextLoadPoint].asmLine = program.codeSegment.Item2[i];
+                computer.memory.virtualAddressSpace[i].value = program.codeSegment.Item1[i];
+                computer.memory.virtualAddressSpace[i].asmLine = program.codeSegment.Item2[i];
             }
+
+            int nextLoadPoint = program.codeSegment.Item1.Count; // 8-byte stack reservation.
+
+
+
+            // Load the data segment into memory.
+            //todo - doesn't work at mo, because it needs to minus the nextLoadPoint, not add it, perhaps, in memory?
+            /*for (int i = 0; i < program.dataSegment.Count; i++)
+            {
+                computer.memory.virtualAddressSpace[i + nextLoadPoint].value = program.dataSegment[i];
+            }*/
+
+            nextLoadPoint += program.dataSegment.Count;
 
 
 
