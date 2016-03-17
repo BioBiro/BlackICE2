@@ -10,7 +10,7 @@
         <Button x:Name="button" Content="Step" HorizontalAlignment="Left" Margin="10,430,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="538">
             <MenuItem Header="File" Margin="0">
-                <MenuItem Header="Load ASM" HorizontalAlignment="Left" Click="MenuItem_Click" Width="130"/>
+                <MenuItem Header="Load ASM" HorizontalAlignment="Left" Click="MenuItem_Click"/>
                 <MenuItem Header="Load machine code" HorizontalAlignment="Left" Click="MenuItem_Click_2"/>
             </MenuItem>
         </Menu>
@@ -36,13 +36,14 @@
                 <Label x:Name="label4" Content="Label" HorizontalAlignment="Left" Margin="44,110,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="22" Margin="10,403,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="22" Margin="115,403,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="75"/>
         <GroupBox x:Name="groupBox3" Header="Memory Layout" HorizontalAlignment="Left" Margin="195,421,0,0" VerticalAlignment="Top" Height="68" Width="146">
             <Grid HorizontalAlignment="Left" Height="58" Margin="0,0,-2,-8" VerticalAlignment="Top" Width="136">
                 <RadioButton x:Name="radioButton" Content="Bottom-up" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="radioButton_Checked"/>
                 <RadioButton x:Name="radioButton1" Content="Top-down" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Checked="radioButton1_Checked" IsChecked="True"/>
             </Grid>
         </GroupBox>
+        <Label Content="Entry point (bytes)" HorizontalAlignment="Left" Margin="10,399,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
