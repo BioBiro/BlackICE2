@@ -27,7 +27,32 @@ namespace BlackICE2
         {
             InitializeComponent();
 
+
+
             // really useful --> https://defuse.ca/online-x86-assembler.htm
+
+
+
+            richTextBox.AppendText("text1");
+
+            richTextBox.AppendText("blahblahblah");
+
+
+
+            TextRange rangeOfText1 = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            rangeOfText1.Text = "Text1 ";
+            rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Blue);
+            rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+
+            TextRange rangeOfWord = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            rangeOfWord.Text = "word ";
+            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
+            rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
+
+            TextRange rangeOfText2 = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            rangeOfText2.Text = "Text2 ";
+            rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Blue);
+            rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
         }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -45,11 +70,34 @@ namespace BlackICE2
             Computer c = Singleton.GetSingleton().computer; // todo DELETE ME
 
 
-
             int ipx = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
 
-            listBox1.SelectedIndex = Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine;// ( - (int)(sliderEntryPointer.Value)) - 1;
-            
+
+            // Redraw the assembly instructions.
+            listBox1.Items.Clear();
+
+            for (int i = 0; i < this.source.Length; i++)
+            {
+                ListBoxItem lbix = new ListBoxItem();
+                lbix.Content = this.source[i];
+                //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+
+                if (i == Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine)// ( - (int)(sliderEntryPointer.Value)) - 1)
+                {
+                    lbix.Foreground = System.Windows.Media.Brushes.Yellow;
+                    lbix.Background = System.Windows.Media.Brushes.Aqua;
+                }
+                else
+                {
+                    lbix.Foreground = System.Windows.Media.Brushes.Red;
+                    lbix.Background = System.Windows.Media.Brushes.Lime;
+                }
+
+                listBox1.Items.Add(lbix);
+            }
+
+            //listBox1.SelectedIndex = Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine;// ( - (int)(sliderEntryPointer.Value)) - 1;
+
 
 
             byte[] modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.ACCUMULATOR), 0), 4);
@@ -57,11 +105,9 @@ namespace BlackICE2
             label1.Content = inced.ToString();
 
 
-
             modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.BASE), 0), 4);
             inced = BitConverter.ToInt32(modsvalue, 0);
             label2.Content = inced.ToString();
-
 
 
             modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0), 4);
@@ -69,11 +115,9 @@ namespace BlackICE2
             label3.Content = inced.ToString();
 
 
-
             modsvalue = Helper.GetHelper().PadWithBytes(Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0), 4);
             inced = BitConverter.ToInt32(modsvalue, 0);
             label4.Content = inced.ToString();
-
 
 
             RedrawMemory();
@@ -83,6 +127,8 @@ namespace BlackICE2
         {
             if (Singleton.GetSingleton().computer != null)
             {
+                int instructionPointer = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
+                int stackPointer = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0)[0];
 
                 if (this.uglyGlobalDirection == 1)
                 {
@@ -94,12 +140,25 @@ namespace BlackICE2
                         ListBoxItem lbix = new ListBoxItem();
                         lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
                         //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+
+                        if (i == instructionPointer)
+                        {
+                            lbix.Foreground = System.Windows.Media.Brushes.Yellow;
+                            lbix.Background = System.Windows.Media.Brushes.Aqua;
+                        }
+                        else if (i == stackPointer)
+                        {
+                            lbix.Foreground = System.Windows.Media.Brushes.Aqua;
+                            lbix.Background = System.Windows.Media.Brushes.Yellow;
+                        }
+                        else
+                        {
+                            lbix.Foreground = System.Windows.Media.Brushes.Red;
+                            lbix.Background = System.Windows.Media.Brushes.Lime;
+                        }
+
                         listBox2.Items.Add(lbix);
                     }
-
-
-
-                    listBox2.SelectedIndex = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
                 }
                 else if (this.uglyGlobalDirection == 2)
                 {
@@ -115,7 +174,6 @@ namespace BlackICE2
                     }
 
 
-
                     listBox2.SelectedIndex = 31 - Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
                 }
             }
@@ -127,17 +185,19 @@ namespace BlackICE2
         }
 
 
-        
+
+        string[] source; // todo Remove - global hack
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Assembly language|*.asm";
             if (openFileDialog.ShowDialog() == true)
             {
                 // new program typed in; open an existing program, etc. Instructions are put into GUI editor.
                 // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
                 // ^ Don't worry about how you're going to index the correct machine code character(s) to change - just put the entire code segment into the GUI, then let the form component word-wrap it. You can send the whole thing forwards/back if you want into the Loader in memory, or come up with a fancier way of indexing it if you want.
 
-                string[] source = File.ReadAllLines(openFileDialog.FileName);
+                source = File.ReadAllLines(openFileDialog.FileName);
 
                 foreach (string s in source)
                 {
@@ -211,6 +271,7 @@ namespace BlackICE2
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Machine code|*.bin";
             if (openFileDialog.ShowDialog() == true)
             {
                 using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open))

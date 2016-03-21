@@ -44,6 +44,13 @@
             </Grid>
         </GroupBox>
         <Label Content="Entry point (bytes)" HorizontalAlignment="Left" Margin="10,399,0,0" VerticalAlignment="Top"/>
+        <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="165" Margin="195,45,0,0" VerticalAlignment="Top" Width="146">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
     </Grid>
 </Window>
