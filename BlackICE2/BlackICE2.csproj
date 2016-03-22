@@ -61,6 +61,9 @@
     </ApplicationDefinition>
     <Compile Include="Address.cs" />
     <Compile Include="Computer.cs" />
+    <Compile Include="Edit.xaml.cs">
+      <DependentUpon>Edit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Human.cs" />
     <Compile Include="ICPU.cs" />
@@ -74,6 +77,10 @@
     <Compile Include="X86CPU.cs" />
     <Compile Include="X86InstructionSet.cs" />
     <Compile Include="X86Registers.cs" />
+    <Page Include="Edit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

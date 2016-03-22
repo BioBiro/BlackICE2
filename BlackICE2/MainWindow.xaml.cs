@@ -54,9 +54,9 @@ namespace BlackICE2
         {
             ListBoxItem lbi = sender as ListBoxItem;
 
-            //string input = Microsoft.VisualBasic.Interaction.InputBox("Enter a new line (was: " + lbi.Content as string + ")", "Change line", lbi.Content as string, -1, -1);
-
-            //lbi.Content = input;
+            Edit edit = new Edit();
+            edit.oldValue = Int32.Parse(lbi.Content as string);
+            lbi.Content = edit.newValue;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -134,7 +134,7 @@ namespace BlackICE2
                     {
                         ListBoxItem lbix = new ListBoxItem();
                         lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
-                        //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+                        lbix.MouseDoubleClick += _MouseLeftButtonDown;
 
                         if (i == instructionPointer)
                         {
@@ -164,7 +164,7 @@ namespace BlackICE2
                     {
                         ListBoxItem lbix = new ListBoxItem();
                         lbix.Content = "[" + i.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[i].value.ToString();
-                        //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+                        lbix.MouseDoubleClick += _MouseLeftButtonDown;
                         listBox2.Items.Add(lbix);
                     }
 
@@ -283,6 +283,7 @@ namespace BlackICE2
 
 
             // Reverse ASM.
+
         }
 
 

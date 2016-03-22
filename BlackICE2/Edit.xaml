@@ -1,0 +1,11 @@
+﻿<Window x:Class="BlackICE2.Edit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Edit" Height="300" Width="300">
+    <Grid>
+        <Label x:Name="lEdit" Content="Label" HorizontalAlignment="Left" Margin="52,24,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbEdit" HorizontalAlignment="Left" Height="23" Margin="72,81,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="72,150,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>
