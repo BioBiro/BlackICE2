@@ -33,26 +33,21 @@ namespace BlackICE2
 
 
 
-            richTextBox.AppendText("text1");
-
-            richTextBox.AppendText("blahblahblah");
-
-
-
-            TextRange rangeOfText1 = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            TextRange rangeOfText1 = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd); // end to end
             rangeOfText1.Text = "Text1 ";
             rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Blue);
             rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
 
-            TextRange rangeOfWord = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            TextRange rangeOfWord = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd); // end to end
             rangeOfWord.Text = "word ";
             rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
             rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
 
-            TextRange rangeOfText2 = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            TextRange rangeOfText2 = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd); // start to end
             rangeOfText2.Text = "Text2 ";
             rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Blue);
             rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            rangeOfText2.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Yellow);
         }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -282,9 +277,12 @@ namespace BlackICE2
                     {
                         Console.WriteLine(value);
                     }
-                }
-                
+                }                
             }
+
+
+
+            // Reverse ASM.
         }
 
 
