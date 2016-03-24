@@ -110,12 +110,26 @@ namespace BlackICE2
             int loopipx = 0;
             int reverseAsmLineCounter = 0;
 
-            for (loopipx = 0; loopipx < 15; loopipx += 0) // Replace lopo iteration maximum constant with length of 'codeSegment' in 'Program'.
+            for (loopipx = 0; loopipx < 15; loopipx += 0) // Replace loop iteration maximum constant with length of 'codeSegment' in 'Program'.
             {
                 int toSkip = instructions.ToSkip(Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx].value); // Number of parameters.
                 //int toSkip2 = toSkip + Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
 
                 string methodName = "_" + Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx].value;
+
+                string parameterGarbage = "";
+
+
+
+                // Loop through opcode's parameters.
+                for (int x = 1; x < toSkip; x++)
+                {
+                    parameterGarbage = "";
+
+                    parameterGarbage += Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx + x].value;
+                }               
+                
+
 
                 Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx].reverseAsmLine = reverseAsmLineCounter;
                 loopipx += toSkip;
@@ -127,7 +141,7 @@ namespace BlackICE2
 
                 ListBoxItem lbix2 = new ListBoxItem();
 
-                lbix2.Content = instructions.opcodes[methodName];
+                lbix2.Content = instructions.opcodes[methodName] + parameterGarbage;
 
 
 
