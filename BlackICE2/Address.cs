@@ -11,6 +11,7 @@ namespace BlackICE2
         public byte value;
 
         public int asmLine;
+        public int reverseAsmLine;
 
 
 

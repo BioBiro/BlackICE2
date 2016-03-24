@@ -68,6 +68,7 @@ namespace BlackICE2
             int ipx = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
 
 
+
             // Redraw the assembly instructions.
             listBox1.Items.Clear();
 
@@ -92,6 +93,67 @@ namespace BlackICE2
             }
 
             //listBox1.SelectedIndex = Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine;// ( - (int)(sliderEntryPointer.Value)) - 1;
+
+
+
+
+
+
+
+
+
+            // Redraw reverse assembly instructions.
+            listBox3.Items.Clear();
+
+            X86InstructionSet instructions = new X86InstructionSet(Singleton.GetSingleton().computer); // todo Remove, as only instantiated for the ToSkip() call below.
+
+            int loopipx = 0;
+            int reverseAsmLineCounter = 0;
+
+            for (loopipx = 0; loopipx < 15; loopipx += 0) // Replace lopo iteration maximum constant with length of 'codeSegment' in 'Program'.
+            {
+                int toSkip = instructions.ToSkip(Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx].value); // Number of parameters.
+                //int toSkip2 = toSkip + Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
+
+                string methodName = "_" + Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx].value;
+
+                Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx].reverseAsmLine = reverseAsmLineCounter;
+                loopipx += toSkip;
+                if (loopipx == 14)
+                {
+                    List<Address> la = Singleton.GetSingleton().computer.memory.virtualAddressSpace; // todo DELETE ME
+                }
+                reverseAsmLineCounter += 1; // toSkip may be more than 1, but asmLine bump will always be 1.
+
+                ListBoxItem lbix2 = new ListBoxItem();
+
+                lbix2.Content = instructions.opcodes[methodName];
+
+
+
+                if (loopipx == Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].reverseAsmLine)// ( - (int)(sliderEntryPointer.Value)) - 1)
+                {
+                    lbix2.Foreground = System.Windows.Media.Brushes.Yellow;
+                    lbix2.Background = System.Windows.Media.Brushes.Aqua;
+                }
+                else
+                {
+                    lbix2.Foreground = System.Windows.Media.Brushes.Red;
+                    lbix2.Background = System.Windows.Media.Brushes.Lime;
+                }
+
+
+
+                listBox3.Items.Add(lbix2);
+            }
+            
+            
+
+
+
+
+
+
 
 
 
@@ -263,6 +325,8 @@ namespace BlackICE2
             RedrawMemory();
         }
 
+
+
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -279,11 +343,6 @@ namespace BlackICE2
                     }
                 }                
             }
-
-
-
-            // Reverse ASM.
-
         }
 
 
@@ -302,6 +361,15 @@ namespace BlackICE2
             this.uglyGlobalDirection = 2;
 
             RedrawMemory();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("BlackICE2 - a CPU emulator and low-level test harness."
+                + Environment.NewLine
+                + Environment.NewLine
+                + "Written by Matthew Hirst, 2016."
+                , "About BlackICE2");
         }
     }
 }

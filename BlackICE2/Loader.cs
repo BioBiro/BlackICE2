@@ -70,28 +70,12 @@ namespace BlackICE2
             castedIP = computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
 
 
+            
+            X86InstructionSet instructions = new X86InstructionSet(computer); // todo Remove, as only instantiated for the ToSkip() call below.
 
-            int toSkip = ToSkip(computer.memory.virtualAddressSpace[castedIP].value);
+            int toSkip = instructions.ToSkip(computer.memory.virtualAddressSpace[castedIP].value);
             int toSkip2 = toSkip + computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
             computer.cPU.GetRegisters().SetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0, Helper.GetHelper().PadWithBytes((byte)(toSkip2), 4)); // Get next opcode to instruction ready to read.
-        }
-
-
-
-        public int ToSkip(byte machineCode) // todo --> Available for dissasembler to use...
-        {
-            // Do your reflective invocation thing here...              
-            Type reflectionType = typeof(X86InstructionSet);
-
-            // Turn 32-bit instruction opcode into instruction opcode.
-
-            // Prep for 'reflective invoke' :-).
-            string methodName = "_" + machineCode;//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
-
-            MethodInfo info = reflectionType.GetMethod(methodName);
-            ParameterInfo[] parameterInfos = info.GetParameters();
-
-            return parameterInfos.Length + 1; // Always return at least 1, as in - an instruction with no parameters.
         }
 
 

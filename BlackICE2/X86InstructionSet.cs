@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Reflection;
+
 namespace BlackICE2
 {
     /*public class FunkyDick : IEqualityComparer<Tuple<string, List<Operand.OperandType>>> // Only public so that we can unit test this.
@@ -36,15 +38,49 @@ namespace BlackICE2
             
             
             // * Opcodes. *
-            // needs uncommenting!--> this.opcodes = new Dictionary<Tuple<string, List<Operand.OperandType>>, string>(new FunkyDick());
+            this.opcodes = new Dictionary<string, string>();
 
             // MOV
-            // needs uncommenting!--> this.opcodes.Add(new Tuple<string, List<Operand.OperandType>>("MOV", new List<Operand.OperandType> { Operand.OperandType.Register, Operand.OperandType.Literal }), "88");
+            this.opcodes.Add("_184", "MOV EAX, ");
+
+            this.opcodes.Add("_232", "CALL ");
+
+            this.opcodes.Add("_40", "INC EAX");
+
+            this.opcodes.Add("_50", "PUSH EAX");
+
+            this.opcodes.Add("_58", "POP EAX");
+
+            this.opcodes.Add("_195", "RET");
+
+            this.opcodes.Add("_106", "PUSH ");
+
+            //this.opcodes.Add("_233", "JMP ");
+
+            this.opcodes.Add("_89", "MOV ");
         }
 
 
 
-        // needs uncommenting!--> public Dictionary<Tuple<string, List<Operand.OperandType>>, string> opcodes;
+        public Dictionary<string, string> opcodes;
+
+
+
+        public int ToSkip(byte machineCode) // todo --> Available for dissasembler to use... Should this method be moved to a base (inherited) InstructionSet class?
+        {
+            // Do your reflective invocation thing here...              
+            Type reflectionType = typeof(X86InstructionSet);
+
+            // Turn 32-bit instruction opcode into instruction opcode.
+
+            // Prep for 'reflective invoke' :-).
+            string methodName = "_" + machineCode;//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
+
+            MethodInfo info = reflectionType.GetMethod(methodName);
+            ParameterInfo[] parameterInfos = info.GetParameters();
+
+            return parameterInfos.Length + 1; // Always return at least 1, as in - an instruction with no parameters.
+        }
 
 
 
