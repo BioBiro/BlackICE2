@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlackICE2"
         mc:Ignorable="d"
-        Title="BlackICE2" Height="529" Width="783" ResizeMode="CanMinimize" Icon="crack_w51_icon.ico">
+        Title="BlackICE2" Height="742" Width="788" ResizeMode="CanMinimize" Icon="crack_w51_icon.ico">
     <Grid Margin="0,0,-6,5">
         <Button x:Name="button" Content="Step" HorizontalAlignment="Left" Margin="10,430,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="538">
+        <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="782">
             <MenuItem Header="File" Margin="0">
-                <MenuItem Header="Load ASM" HorizontalAlignment="Left" Click="MenuItem_Click"/>
+                <MenuItem Header="Load ASM" HorizontalAlignment="Left" Click="MenuItem_Click" Width="130"/>
                 <MenuItem Header="Load machine code" HorizontalAlignment="Left" Click="MenuItem_Click_2"/>
+                <MenuItem x:Name="miLoadUnitTests" Header="Load unit tests" HorizontalAlignment="Left" Width="130" Click="miLoadUnitTests_Click"/>
+                <MenuItem x:Name="miSaveUnitTests" Header="Save unit tests" HorizontalAlignment="Left" Width="130" Click="miSaveUnitTests_Click"/>
             </MenuItem>
             <MenuItem Header="Help" Margin="0">
                 <MenuItem Header="About" HorizontalAlignment="Left" Width="85" Click="MenuItem_Click_1"/>
@@ -47,18 +49,27 @@
             </Grid>
         </GroupBox>
         <Label Content="Entry point (bytes)" HorizontalAlignment="Left" Margin="10,399,0,0" VerticalAlignment="Top"/>
-        <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="165" Margin="195,45,0,0" VerticalAlignment="Top" Width="146">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="RichTextBox"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-        <GroupBox Header="Reverse ASM" HorizontalAlignment="Left" Margin="195,215,0,0" VerticalAlignment="Top" Height="201" Width="146">
+        <GroupBox Header="Reverse ASM" HorizontalAlignment="Left" Margin="195,25,0,0" VerticalAlignment="Top" Height="201" Width="146">
             <ListBox x:Name="listBox3" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="116" Margin="10,10,0,0"/>
         </GroupBox>
         <GroupBox Header="Opcode-aligned Memory" HorizontalAlignment="Left" Margin="530,25,0,0" VerticalAlignment="Top" Height="465" Width="243">
             <ListBox x:Name="listBox4" HorizontalAlignment="Left" Height="430" VerticalAlignment="Top" Width="213" Margin="10,10,0,0"/>
+        </GroupBox>
+        <GroupBox x:Name="groupBox4" Header="Unit Tests" HorizontalAlignment="Left" Margin="10,495,0,0" VerticalAlignment="Top" Height="207" Width="763">
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="197" Margin="0,0,-2,-8" Width="753">
+                <ListView x:Name="lvUnitTests" HorizontalAlignment="Left" Height="143" Margin="10,10,0,0" VerticalAlignment="Top" Width="733">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="100"/>
+                            <GridViewColumn Header="Status" Width="100"/>
+                            <GridViewColumn Header="Expected Result" Width="100"/>
+                            <GridViewColumn Header="Actual Result" Width="100"/>
+                            <GridViewColumn Header="Message" Width="100"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button x:Name="bAddUnitTest" Content="Add unit test" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="75"/>
+            </Grid>
         </GroupBox>
 
     </Grid>

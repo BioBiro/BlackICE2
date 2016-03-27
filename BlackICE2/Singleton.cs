@@ -36,5 +36,7 @@ namespace BlackICE2
         public Human human;
 
         public Computer computer;
+
+        public List<UnitTest> unitTests;
     }
 }

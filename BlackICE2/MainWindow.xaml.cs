@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using System.IO;
 using Microsoft.Win32;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BlackICE2
 {
@@ -29,25 +30,11 @@ namespace BlackICE2
 
 
 
+            Singleton.GetSingleton().unitTests = new List<UnitTest>();
+
+
+
             // really useful --> https://defuse.ca/online-x86-assembler.htm
-
-
-
-            TextRange rangeOfText1 = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd); // end to end
-            rangeOfText1.Text = "Text1 ";
-            rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Blue);
-            rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
-
-            TextRange rangeOfWord = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd); // end to end
-            rangeOfWord.Text = "word ";
-            rangeOfWord.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
-            rangeOfWord.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Regular);
-
-            TextRange rangeOfText2 = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd); // start to end
-            rangeOfText2.Text = "Text2 ";
-            rangeOfText2.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Blue);
-            rangeOfText2.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
-            rangeOfText2.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Yellow);
         }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -247,12 +234,45 @@ namespace BlackICE2
 
                     listBox2.SelectedIndex = 31 - Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
                 }
-            }
-        }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            
+
+
+                // Opcode-aligned memory. (you can't allow this to be edited (mouseclickevent), as the memory 'entries' are variable length).
+                listBox4.Items.Clear();
+
+                X86InstructionSet instructions = new X86InstructionSet(Singleton.GetSingleton().computer); // todo Remove, as only instantiated for the ToSkip() call below.
+
+                int loopipx2 = 0;
+                for (loopipx2 = 0; loopipx2 < 15; loopipx2 += 0) // Replace loop iteration maximum constant with length of 'codeSegment' in 'Program'.
+                {
+                    int toSkip2 = instructions.ToSkip(Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx2].value); // Number of parameters.
+
+                    string methodName = "_" + Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx2].value;
+
+                    string parameterGarbage = "";
+
+
+
+                    // Loop through opcode's parameters.
+                    for (int x = 1; x < toSkip2; x++)
+                    {
+                        parameterGarbage = "";
+
+                        parameterGarbage += Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx2 + x].value;
+                    }
+
+
+
+                    ListBoxItem lbix = new ListBoxItem();
+                    lbix.Content = "[" + loopipx2.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx2].value.ToString() + " " + parameterGarbage;
+
+                    listBox4.Items.Add(lbix);
+
+
+
+                    loopipx2 += toSkip2;
+                }
+            }
         }
 
 
@@ -384,6 +404,93 @@ namespace BlackICE2
                 + Environment.NewLine
                 + "Written by Matthew Hirst, 2016."
                 , "About BlackICE2");
+        }
+
+        private void miLoadUnitTests_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "BlackICE2 Unit Tests|*.b2u";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open))
+                {
+                    //Format the object as Binary
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    object obj = formatter.Deserialize(fs);
+                    List<UnitTest> uts = (List<UnitTest>)obj;
+                    fs.Flush();
+                    fs.Close();
+                    fs.Dispose();
+
+
+
+                    uts[0].name = "blah blah";
+                    Singleton.GetSingleton().unitTests = uts;
+
+
+
+                    uts = Singleton.GetSingleton().unitTests;
+                    
+
+
+                    // Read bytes from stream and interpret them as ints. Use BinaryReader if you need bytes instead of integers when reading.
+                    /*int value = 0;
+                    while ((value = fs.ReadByte()) != -1)
+                    {
+                        Console.WriteLine(value);
+                    }*/
+                }
+            }
+
+            
+
+            //Reading the file from the server
+            //FileStream fs = File.Open("asmtestcases", FileMode.Open);            
+        }
+
+        private void miSaveUnitTests_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "BlackICE2 Unit Tests|*.b2u";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (System.IO.Stream ms = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                {
+                    Singleton.GetSingleton().unitTests.Add(new UnitTest("jem"));
+                    
+                    
+
+
+
+                    //Format the object as Binary
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    //It serialize the employee object
+                    formatter.Serialize(ms, Singleton.GetSingleton().unitTests);
+                    ms.Flush();
+                    ms.Close();
+                    ms.Dispose();
+
+
+
+
+
+                    List<UnitTest> uts = Singleton.GetSingleton().unitTests;
+
+
+
+                    if (uts != null)
+                    {
+                        MessageBox.Show(uts[0].name);
+                    }
+                }
+            }
+
+
+
+            //Create the stream to add object into it.
+            //System.IO.Stream ms = File.OpenWrite("asmtestcases.b2u");            
         }
     }
 }
