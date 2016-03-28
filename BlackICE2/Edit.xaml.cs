@@ -29,7 +29,7 @@ namespace BlackICE2
 
 
             
-            this.Show();
+            this.ShowDialog();
         }
 
         public int oldValue { get; set; }

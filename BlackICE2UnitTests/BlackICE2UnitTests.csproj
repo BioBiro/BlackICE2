@@ -57,6 +57,12 @@
     <Compile Include="X86InstructionSetUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlackICE2\BlackICE2.csproj">
+      <Project>{b72dd037-bf0b-4386-acaf-0855b8b645a6}</Project>
+      <Name>BlackICE2</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackICE2
 {
-    class X86Registers : IRegisters
+    public class X86Registers : IRegisters
     {
         public const int REGISTER_REGISTER = 0;
         public const int REGISTER_SEGMENT = 1;
@@ -20,6 +20,10 @@ namespace BlackICE2
             STACK_POINTER,
             INSTRUCTION_POINTER
         }
+
+
+
+        public string[] register_names = {"EAX", "EBX"};
         
         
         
@@ -40,10 +44,16 @@ namespace BlackICE2
 
             // Stack pointer.
             this.registers.Add((int)((int)(RegisterPointers.STACK_POINTER)), new byte[4] { 32, 0, 0, 0 } ); // todo - change const value to something more sensible (bites - 8 * CPU bytes architechture).
-
-
+            
             // Instruction pointer.
             this.registers.Add((int)((int)(RegisterPointers.INSTRUCTION_POINTER)), new byte[4]); // Can initialize to zero here if required...
+        }
+
+
+
+        public string[] GetRegisters()
+        {
+            return this.register_names;
         }
 
 

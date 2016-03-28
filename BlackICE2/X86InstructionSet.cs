@@ -29,7 +29,7 @@ namespace BlackICE2
 
     
     
-    class X86InstructionSet : IInstructionSet
+    public class X86InstructionSet : IInstructionSet
     {
         public X86InstructionSet(Computer parentComputer)
         {

@@ -492,5 +492,19 @@ namespace BlackICE2
             //Create the stream to add object into it.
             //System.IO.Stream ms = File.OpenWrite("asmtestcases.b2u");            
         }
+
+        private void bAddUnitTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestCase tc = new TestCase();
+
+
+
+            Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegisters();
+
+
+
+
+            tc.ShowDialog();
+        }
     }
 }

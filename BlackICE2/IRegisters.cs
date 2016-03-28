@@ -8,6 +8,8 @@ namespace BlackICE2
 {
     public interface IRegisters
     {
+        string[] GetRegisters();
+
         byte[] GetRegister(int register, int segment);
         void SetRegister(int register, int segment, byte[] value);
 
