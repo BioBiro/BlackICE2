@@ -49,7 +49,7 @@ namespace BlackICE2
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Singleton.GetSingleton().human.loader.Step(Singleton.GetSingleton().computer);
-            Computer c = Singleton.GetSingleton().computer; // todo DELETE ME
+
 
 
             int ipx = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
