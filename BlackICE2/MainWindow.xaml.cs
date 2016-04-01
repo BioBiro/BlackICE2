@@ -103,39 +103,6 @@ namespace BlackICE2
 
 
 
-
-
-
-            /*for (int i = 0; i < this.source.Length; i++)
-            {
-                ListBoxItem lbix = new ListBoxItem();
-                lbix.Content = this.source[i];
-                //lbix.MouseDoubleClick += _MouseLeftButtonDown;
-
-                if (i == Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine)// ( - (int)(sliderEntryPointer.Value)) - 1)
-                {
-                    lbix.Foreground = System.Windows.Media.Brushes.Yellow;
-                    lbix.Background = System.Windows.Media.Brushes.Aqua;
-                }
-                else
-                {
-                    lbix.Foreground = System.Windows.Media.Brushes.Red;
-                    lbix.Background = System.Windows.Media.Brushes.Lime;
-                }
-
-                listBox1.Items.Add(lbix);
-            }*/
-
-            //listBox1.SelectedIndex = Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine;// ( - (int)(sliderEntryPointer.Value)) - 1;
-
-
-
-
-
-
-
-
-
             // Redraw reverse assembly instructions.
             listBox3.Items.Clear();
 
