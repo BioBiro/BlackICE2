@@ -35,7 +35,7 @@ namespace BlackICE2
 
 
             // really useful --> https://defuse.ca/online-x86-assembler.htm
-        }        
+        }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -81,7 +81,7 @@ namespace BlackICE2
 
 
 
-                if (i == (ipx + toSkip))
+                if (i == ipx)
                 {
                     lbix.Foreground = System.Windows.Media.Brushes.Yellow;
                     lbix.Background = System.Windows.Media.Brushes.Aqua;
@@ -179,7 +179,8 @@ namespace BlackICE2
 
 
 
-                if (loopipx == Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].reverseAsmLine)// ( - (int)(sliderEntryPointer.Value)) - 1)
+                //if (loopipx == Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].reverseAsmLine)// ( - (int)(sliderEntryPointer.Value)) - 1)
+                if (loopipx == ipx)// ( - (int)(sliderEntryPointer.Value)) - 1)
                 {
                     lbix2.Foreground = System.Windows.Media.Brushes.Yellow;
                     lbix2.Background = System.Windows.Media.Brushes.Aqua;
