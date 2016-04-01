@@ -80,7 +80,7 @@ namespace BlackICE2
             ParameterInfo[] parameterInfos = info.GetParameters();
 
             return parameterInfos.Length + 1; // Always return at least 1, as in - an instruction with no parameters.
-        }
+        }        
 
 
 

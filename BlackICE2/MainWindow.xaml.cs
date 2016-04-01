@@ -35,7 +35,7 @@ namespace BlackICE2
 
 
             // really useful --> https://defuse.ca/online-x86-assembler.htm
-        }
+        }        
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -59,7 +59,54 @@ namespace BlackICE2
             // Redraw the assembly instructions.
             listBox1.Items.Clear();
 
+
+
+
+
+
+
+
+
+            // try and work out where to be...            
             for (int i = 0; i < this.source.Length; i++)
+            {
+                ListBoxItem lbix = new ListBoxItem();
+                lbix.Content = this.source[i];
+                //lbix.MouseDoubleClick += _MouseLeftButtonDown;
+
+
+
+                X86InstructionSet instructionsX = new X86InstructionSet(Singleton.GetSingleton().computer);
+                int toSkip = instructionsX.ToSkip(Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].value); // Number of parameters.
+
+
+
+                if (i == (ipx + toSkip))
+                {
+                    lbix.Foreground = System.Windows.Media.Brushes.Yellow;
+                    lbix.Background = System.Windows.Media.Brushes.Aqua;
+                }
+                else
+                {
+                    lbix.Foreground = System.Windows.Media.Brushes.Red;
+                    lbix.Background = System.Windows.Media.Brushes.Lime;
+                }
+
+                listBox1.Items.Add(lbix);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+            /*for (int i = 0; i < this.source.Length; i++)
             {
                 ListBoxItem lbix = new ListBoxItem();
                 lbix.Content = this.source[i];
@@ -77,7 +124,7 @@ namespace BlackICE2
                 }
 
                 listBox1.Items.Add(lbix);
-            }
+            }*/
 
             //listBox1.SelectedIndex = Singleton.GetSingleton().computer.memory.virtualAddressSpace[ipx].asmLine;// ( - (int)(sliderEntryPointer.Value)) - 1;
 
@@ -260,13 +307,30 @@ namespace BlackICE2
 
                         parameterGarbage += Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx2 + x].value;
                     }
+                    
 
 
+                    int ipx = Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.INSTRUCTION_POINTER), 0)[0];
 
                     ListBoxItem lbix = new ListBoxItem();
                     lbix.Content = "[" + loopipx2.ToString() + "] " + Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx2].value.ToString() + " " + parameterGarbage;
 
+                    if (loopipx2 == ipx)
+                    {
+                        lbix.Foreground = System.Windows.Media.Brushes.Yellow;
+                        lbix.Background = System.Windows.Media.Brushes.Aqua;
+                    }
+                    else
+                    {
+                        lbix.Foreground = System.Windows.Media.Brushes.Red;
+                        lbix.Background = System.Windows.Media.Brushes.Lime;
+                    }
+
                     listBox4.Items.Add(lbix);
+
+
+
+
 
 
 
