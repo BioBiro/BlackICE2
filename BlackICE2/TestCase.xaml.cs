@@ -19,9 +19,30 @@ namespace BlackICE2
     /// </summary>
     public partial class TestCase : Window
     {
+        public UnitTest ut; // Result grabbed by whoever created instance of class.
+
+
+        
         public TestCase()
         {
             InitializeComponent();
+
+
+
+            // Add registers.
+            cmTestCaseRegisters.Items.Clear();
+            
+            foreach (string register in Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegisters())
+            {
+                cmTestCaseRegisters.Items.Add(register);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.ut = new UnitTest(this.tbExpectedResult.Text);
+            
+            this.Close();
         }
     }
 }

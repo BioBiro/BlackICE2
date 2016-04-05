@@ -33,10 +33,12 @@ namespace BlackICE2
 
 
 
+        public string[] asmSource;
+
         public Human human;
 
         public Computer computer;
 
-        public List<UnitTest> unitTests;
+        public UnitTestSuite unitTestSuite;
     }
 }

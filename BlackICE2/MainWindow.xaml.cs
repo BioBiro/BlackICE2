@@ -30,7 +30,7 @@ namespace BlackICE2
 
 
 
-            Singleton.GetSingleton().unitTests = new List<UnitTest>();
+            Singleton.GetSingleton().unitTestSuite = new UnitTestSuite("testo suite");
 
 
 
@@ -68,10 +68,10 @@ namespace BlackICE2
 
 
             // try and work out where to be...            
-            for (int i = 0; i < this.source.Length; i++)
+            for (int i = 0; i < Singleton.GetSingleton().asmSource.Length; i++)
             {
                 ListBoxItem lbix = new ListBoxItem();
-                lbix.Content = this.source[i];
+                lbix.Content = Singleton.GetSingleton().asmSource[i];
                 //lbix.MouseDoubleClick += _MouseLeftButtonDown;
 
 
@@ -309,7 +309,6 @@ namespace BlackICE2
 
 
 
-        string[] source; // todo Remove - global hack
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -320,9 +319,9 @@ namespace BlackICE2
                 // todo - make this work sooner rather than later --> Allow self-modyfying code ONLY on the code segment machine code (use an event that is triggered when you edit a line in the GUI or something).
                 // ^ Don't worry about how you're going to index the correct machine code character(s) to change - just put the entire code segment into the GUI, then let the form component word-wrap it. You can send the whole thing forwards/back if you want into the Loader in memory, or come up with a fancier way of indexing it if you want.
 
-                source = File.ReadAllLines(openFileDialog.FileName);
+                Singleton.GetSingleton().asmSource = File.ReadAllLines(openFileDialog.FileName);
 
-                foreach (string s in source)
+                foreach (string s in Singleton.GetSingleton().asmSource)
                 {
                     ListBoxItem lbi = new ListBoxItem();
                     lbi.Content = s;
@@ -450,19 +449,19 @@ namespace BlackICE2
                     BinaryFormatter formatter = new BinaryFormatter();
 
                     object obj = formatter.Deserialize(fs);
-                    List<UnitTest> uts = (List<UnitTest>)obj;
+                    UnitTestSuite uts = (UnitTestSuite)obj;
                     fs.Flush();
                     fs.Close();
                     fs.Dispose();
 
 
 
-                    uts[0].name = "blah blah";
-                    Singleton.GetSingleton().unitTests = uts;
+                    uts.name = "blah blah";
+                    Singleton.GetSingleton().unitTestSuite = uts;
 
 
 
-                    uts = Singleton.GetSingleton().unitTests;
+                    uts = Singleton.GetSingleton().unitTestSuite;
                     
 
 
@@ -489,7 +488,7 @@ namespace BlackICE2
             {
                 using (System.IO.Stream ms = new FileStream(saveFileDialog.FileName, FileMode.Create))
                 {
-                    Singleton.GetSingleton().unitTests.Add(new UnitTest("jem"));
+                    Singleton.GetSingleton().unitTestSuite.unitTests.Add(new UnitTest("jem"));
                     
                     
 
@@ -499,7 +498,7 @@ namespace BlackICE2
                     BinaryFormatter formatter = new BinaryFormatter();
 
                     //It serialize the employee object
-                    formatter.Serialize(ms, Singleton.GetSingleton().unitTests);
+                    formatter.Serialize(ms, Singleton.GetSingleton().unitTestSuite);
                     ms.Flush();
                     ms.Close();
                     ms.Dispose();
@@ -508,13 +507,13 @@ namespace BlackICE2
 
 
 
-                    List<UnitTest> uts = Singleton.GetSingleton().unitTests;
+                    UnitTestSuite uts = Singleton.GetSingleton().unitTestSuite;
 
 
 
                     if (uts != null)
                     {
-                        MessageBox.Show(uts[0].name);
+                        MessageBox.Show(uts.name);
                     }
                 }
             }
@@ -528,15 +527,9 @@ namespace BlackICE2
         private void bAddUnitTest_Click(object sender, RoutedEventArgs e)
         {
             TestCase tc = new TestCase();
-
-
-
-            Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegisters();
-
-
-
-
             tc.ShowDialog();
+
+            Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.ut); // Add test case created in dialog.
         }
     }
 }
