@@ -101,13 +101,13 @@ namespace BlackICE2
                 Array.Resize(ref parameters, parameters.Count() + 1);
                 parameters[parameters.Count() - 1] = computer.memory.virtualAddressSpace[line + 1].value; // Next byte is opcode's needed parameter.                                  
 
-                X86InstructionSet instructions = new X86InstructionSet(computer); // todo <-- X86 forced - needs to use IInstructionSet inteface! <-- horrible hack creating a new instruction set on the fly, here... //computer.cPU.instructionSet;                                                                                    
+                IInstructionSet instructions = new X86InstructionSet(computer); // todo <-- horrible hack creating a new instruction set on the fly, here... //computer.cPU.instructionSet;                                                                                    
 
                 info.Invoke(instructions, new object[] { parameters }); // Turn byte array into object array with single byte array element.
             }
             else
             {
-                X86InstructionSet instructions = new X86InstructionSet(computer); // todo <-- X86 forced - needs to use IInstructionSet inteface! <-- horrible hack creating a new instruction set on the fly, here... //computer.cPU.instructionSet;                                                                                    
+                IInstructionSet instructions = new X86InstructionSet(computer); // todo horrible hack creating a new instruction set on the fly, here... //computer.cPU.instructionSet;                                                                                    
                 
                 info.Invoke(instructions, null); // Turn byte array into object array with single byte array element.
             }

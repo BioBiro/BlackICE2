@@ -42,8 +42,13 @@ namespace BlackICE2
             ListBoxItem lbi = sender as ListBoxItem;
 
             Edit edit = new Edit();
-            edit.oldValue = Int32.Parse(lbi.Content as string);
-            lbi.Content = edit.newValue;
+            edit.ShowDialog();
+
+            // grab value
+            // shove in memory (so program behaviour changes)
+            // redraw memory to display new value set in memory.
+            // something like below...
+            // ^ Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.ut); // Add test case created in dialog.
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -134,10 +139,10 @@ namespace BlackICE2
 
                 Singleton.GetSingleton().computer.memory.virtualAddressSpace[loopipx].reverseAsmLine = reverseAsmLineCounter;
                 loopipx += toSkip;
-                if (loopipx == 14)
+                /*if (loopipx == 14)
                 {
                     List<Address> la = Singleton.GetSingleton().computer.memory.virtualAddressSpace; // todo DELETE ME
-                }
+                }*/
                 reverseAsmLineCounter += 1; // toSkip may be more than 1, but asmLine bump will always be 1.
 
                 ListBoxItem lbix2 = new ListBoxItem();

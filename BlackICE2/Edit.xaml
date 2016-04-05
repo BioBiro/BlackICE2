@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Edit" Height="300" Width="300">
     <Grid>
-        <Label x:Name="lEdit" Content="Label" HorizontalAlignment="Left" Margin="52,24,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbEdit" HorizontalAlignment="Left" Height="23" Margin="72,81,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="72,150,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Label x:Name="lEdit" Content="Old value" HorizontalAlignment="Left" Margin="14,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbEdit" HorizontalAlignment="Left" Height="23" Margin="75,215,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Change" HorizontalAlignment="Left" Margin="207,243,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="75,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="New value" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

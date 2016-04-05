@@ -23,7 +23,7 @@ namespace BlackICE2
 
 
 
-        public string[] register_names = {"EAX", "EBX", "ESP", "EIP"}; // todo - made 8-bit, 16-bit, 64-bit versions of these available... somehow.
+        public string[] register_names = {"EAX", "EBX", "ESP", "EIP"}; // todo - made 8-bit, 16-bit, 64-bit versions of these available... somehow (array of string[] - use 8/16/32/64 as 0/1/2/3 array indices?)
         
         
         
