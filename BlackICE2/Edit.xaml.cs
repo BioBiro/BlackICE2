@@ -19,27 +19,23 @@ namespace BlackICE2
     /// </summary>
     public partial class Edit : Window
     {
+        public int oldValue { get; set; }
+        public int newValue { get; set; }
+
+
+
         public Edit()
         {
             InitializeComponent();
 
-
-
             this.lEdit.Content = this.oldValue;
-
-
             
             this.ShowDialog();
         }
 
-        public int oldValue { get; set; }
-        public int newValue { get; set; }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.newValue = Int32.Parse(this.tbEdit.Text);
-
-
             
             this.Close();
         }

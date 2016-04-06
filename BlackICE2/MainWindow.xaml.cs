@@ -42,13 +42,11 @@ namespace BlackICE2
             ListBoxItem lbi = sender as ListBoxItem;
 
             Edit edit = new Edit();
+            edit.oldValue = 0; // todo - pass correct value to edit dialog.
             edit.ShowDialog();
+            int x = edit.newValue; // todo - set value from edit dialog.
 
-            // grab value
-            // shove in memory (so program behaviour changes)
-            // redraw memory to display new value set in memory.
-            // something like below...
-            // ^ Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.ut); // Add test case created in dialog.
+            RedrawMemory();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -532,9 +530,35 @@ namespace BlackICE2
         private void bAddUnitTest_Click(object sender, RoutedEventArgs e)
         {
             TestCase tc = new TestCase();
+            tc.ut = new UnitTest("?unittest"); // Create blank unit test, and pass it to dialog.
             tc.ShowDialog();
-
             Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.ut); // Add test case created in dialog.
+
+            RedrawUnitTests();
+        }
+
+        private void bEditUnitTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestCase tc = new TestCase();
+            tc.ut = Singleton.GetSingleton().unitTestSuite.unitTests[lvUnitTests.SelectedIndex]; // Pass selected unit test to Edit dialog.
+            tc.ShowDialog();
+            Singleton.GetSingleton().unitTestSuite.unitTests[0] = tc.ut; // Add test case created in dialog.
+
+            RedrawUnitTests();
+        }
+
+        public void RedrawUnitTests()
+        {
+            lvUnitTests.Items.Clear();
+
+            foreach (UnitTest ut in Singleton.GetSingleton().unitTestSuite.unitTests)
+            {
+                ListViewItem lvi = new ListViewItem();
+
+                
+                
+                lvUnitTests.Items.Add(new string[] {"a,b", "c", "d", "e", "f"}.ToString() );
+            }            
         }
     }
 }
