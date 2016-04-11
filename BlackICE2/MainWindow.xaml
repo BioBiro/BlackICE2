@@ -57,14 +57,14 @@
         </GroupBox>
         <GroupBox x:Name="groupBox4" Header="Unit Tests" HorizontalAlignment="Left" Margin="10,495,0,0" VerticalAlignment="Top" Height="207" Width="763">
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="197" Margin="0,0,-2,-8" Width="753">
-                <ListView x:Name="lvUnitTests" HorizontalAlignment="Left" Height="143" Margin="10,10,0,0" VerticalAlignment="Top" Width="733">
+                <ListView x:Name="lvUnitTests" ItemsSource="{Binding Path=UnitTests}" HorizontalAlignment="Left" Height="143" Margin="10,10,0,0" VerticalAlignment="Top" Width="733" MouseDoubleClick="lvUnitTests_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="100"/>
-                            <GridViewColumn Header="Status" Width="100"/>
-                            <GridViewColumn Header="Expected Result" Width="100"/>
-                            <GridViewColumn Header="Actual Result" Width="100"/>
-                            <GridViewColumn Header="Message" Width="100"/>
+                            <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding name}"/>
+                            <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding status}"/>
+                            <GridViewColumn Header="Expected Result" Width="100" DisplayMemberBinding="{Binding expectedResult}"/>
+                            <GridViewColumn Header="Actual Result" Width="100" DisplayMemberBinding="{Binding actualResult}"/>
+                            <GridViewColumn Header="Message" Width="100" DisplayMemberBinding="{Binding message}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

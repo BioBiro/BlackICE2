@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.ObjectModel;
 
 namespace BlackICE2
 {
@@ -24,17 +25,23 @@ namespace BlackICE2
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<UnitTest> UnitTests
+        {
+            get
+            {
+                return Singleton.GetSingleton().unitTestSuite.unitTests;
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
 
+            this.DataContext = this; // Set-up binding.
+
 
 
             Singleton.GetSingleton().unitTestSuite = new UnitTestSuite("testo suite");
-
-
-
-            // really useful --> https://defuse.ca/online-x86-assembler.htm
         }
 
         private void _MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -491,7 +498,7 @@ namespace BlackICE2
             {
                 using (System.IO.Stream ms = new FileStream(saveFileDialog.FileName, FileMode.Create))
                 {
-                    Singleton.GetSingleton().unitTestSuite.unitTests.Add(new UnitTest("jem"));
+                    Singleton.GetSingleton().unitTestSuite.unitTests.Add(new UnitTest("jem", 0, 0, 0, "a"));
                     
                     
 
@@ -530,11 +537,9 @@ namespace BlackICE2
         private void bAddUnitTest_Click(object sender, RoutedEventArgs e)
         {
             TestCase tc = new TestCase();
-            tc.ut = new UnitTest("?unittest"); // Create blank unit test, and pass it to dialog.
+            tc.ut = new UnitTest("?unittest", 0, 0, 0, "a"); // Create blank unit test, and pass it to dialog.
             tc.ShowDialog();
-            Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.ut); // Add test case created in dialog.
-
-            RedrawUnitTests();
+            Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.ut); // Add test case created in dialog.                 
         }
 
         private void bEditUnitTest_Click(object sender, RoutedEventArgs e)
@@ -543,22 +548,17 @@ namespace BlackICE2
             tc.ut = Singleton.GetSingleton().unitTestSuite.unitTests[lvUnitTests.SelectedIndex]; // Pass selected unit test to Edit dialog.
             tc.ShowDialog();
             Singleton.GetSingleton().unitTestSuite.unitTests[0] = tc.ut; // Add test case created in dialog.
-
-            RedrawUnitTests();
         }
 
-        public void RedrawUnitTests()
+        private void lvUnitTests_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            lvUnitTests.Items.Clear();
-
-            foreach (UnitTest ut in Singleton.GetSingleton().unitTestSuite.unitTests)
+            if (lvUnitTests.SelectedIndex >= 0)
             {
-                ListViewItem lvi = new ListViewItem();
-
-                
-                
-                lvUnitTests.Items.Add(new string[] {"a,b", "c", "d", "e", "f"}.ToString() );
-            }            
+                TestCase tc = new TestCase();
+                tc.ut = Singleton.GetSingleton().unitTestSuite.unitTests[lvUnitTests.SelectedIndex]; // Pass selected unit test to Edit dialog.
+                tc.ShowDialog();
+                Singleton.GetSingleton().unitTestSuite.unitTests[0] = tc.ut; // Add test case created in dialog.
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace BlackICE2
     /// </summary>
     public partial class TestCase : Window
     {   
-        public UnitTest ut {get; set; } // Result grabbed by whoever created instance of class.
+        public UnitTest ut { get; set; } // Result grabbed by whoever created instance of class.
 
 
         
@@ -40,7 +40,7 @@ namespace BlackICE2
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.ut = new UnitTest(this.tbExpectedResult.Text);
+            this.ut = new UnitTest(this.tbName.Text, 0, Int32.Parse(this.tbExpectedResult.Text), 0, "a");
             
             this.Close();
         }
