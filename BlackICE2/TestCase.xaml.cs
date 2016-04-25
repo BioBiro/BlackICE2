@@ -18,8 +18,19 @@ namespace BlackICE2
     /// Interaction logic for TestCase.xaml
     /// </summary>
     public partial class TestCase : Window
-    {   
-        public UnitTest ut { get; set; } // Result grabbed by whoever created instance of class.
+    {           
+        private UnitTest uT;
+        public UnitTest UT
+        {
+            get { return this.uT; }
+            set
+            {
+                this.uT = value;
+
+                // Select current value.
+                //cmTestCaseRegisters.SelectedIndex = uT.register; // pass in/selected test register, expected result, etc.
+            }
+        }
 
 
         
@@ -32,15 +43,12 @@ namespace BlackICE2
             foreach (string register in Singleton.GetSingleton().computer.cPU.GetRegisters().GetRegisters())
             {
                 cmTestCaseRegisters.Items.Add(register);
-            }
-
-            // Select current value.
-            //cmTestCaseRegisters.SelectedIndex = ut.register; // pass in/selected test register, expected result, etc.
+            }            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.ut = new UnitTest(this.tbName.Text, 0, Int32.Parse(this.tbExpectedResult.Text), 0, "a");
+            this.uT = new UnitTest(this.tbName.Text, cmTestCaseRegisters.SelectedIndex, 0, Int32.Parse(this.tbExpectedResult.Text), 0, "a");
             
             this.Close();
         }

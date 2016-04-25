@@ -498,7 +498,7 @@ namespace BlackICE2
             {
                 using (System.IO.Stream ms = new FileStream(saveFileDialog.FileName, FileMode.Create))
                 {
-                    Singleton.GetSingleton().unitTestSuite.unitTests.Add(new UnitTest("jem", 0, 0, 0, "a"));
+                    //Singleton.GetSingleton().unitTestSuite.unitTests.Add(new UnitTest("jem", 0, 0, 0, 0, "a")); // todo - old; delete
                     
                     
 
@@ -537,27 +537,19 @@ namespace BlackICE2
         private void bAddUnitTest_Click(object sender, RoutedEventArgs e)
         {
             TestCase tc = new TestCase();
-            tc.ut = new UnitTest("?unittest", 0, 0, 0, "a"); // Create blank unit test, and pass it to dialog.
+            tc.UT = new UnitTest("?unittest", 0, 0, 0, 0, "a"); // Create blank unit test, and pass it to dialog.
             tc.ShowDialog();
-            Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.ut); // Add test case created in dialog.                 
-        }
-
-        private void bEditUnitTest_Click(object sender, RoutedEventArgs e)
-        {
-            TestCase tc = new TestCase();
-            tc.ut = Singleton.GetSingleton().unitTestSuite.unitTests[lvUnitTests.SelectedIndex]; // Pass selected unit test to Edit dialog.
-            tc.ShowDialog();
-            Singleton.GetSingleton().unitTestSuite.unitTests[0] = tc.ut; // Add test case created in dialog.
+            Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.UT); // Add test case created in dialog.                 
         }
 
         private void lvUnitTests_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (lvUnitTests.SelectedIndex >= 0)
+            if (lvUnitTests.SelectedIndex >= 0) // Only allow editing if we have unit tests.
             {
                 TestCase tc = new TestCase();
-                tc.ut = Singleton.GetSingleton().unitTestSuite.unitTests[lvUnitTests.SelectedIndex]; // Pass selected unit test to Edit dialog.
+                tc.UT = Singleton.GetSingleton().unitTestSuite.unitTests[lvUnitTests.SelectedIndex]; // Pass selected unit test to Edit dialog.
                 tc.ShowDialog();
-                Singleton.GetSingleton().unitTestSuite.unitTests[0] = tc.ut; // Add test case created in dialog.
+                Singleton.GetSingleton().unitTestSuite.unitTests[0] = tc.UT; // Add test case created in dialog.
             }
         }
     }

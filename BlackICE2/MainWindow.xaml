@@ -69,7 +69,6 @@
                     </ListView.View>
                 </ListView>
                 <Button x:Name="bAddUnitTest" Content="Add unit test" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="75" Click="bAddUnitTest_Click"/>
-                <Button x:Name="bEditUnitTest" Content="Edit unit test" HorizontalAlignment="Left" Margin="90,158,0,0" VerticalAlignment="Top" Width="75" Click="bEditUnitTest_Click"/>
             </Grid>
         </GroupBox>
 

@@ -29,7 +29,7 @@ namespace BlackICE2
 
     
     
-    public class X86InstructionSet : IInstructionSet
+    public class X86InstructionSet : InstructionSet, IInstructionSet
     {
         public X86InstructionSet(Computer parentComputer)
         {
@@ -63,24 +63,6 @@ namespace BlackICE2
 
 
         public Dictionary<string, string> opcodes;
-
-
-
-        public int ToSkip(byte machineCode) // todo --> Available for dissasembler to use... Should this method be moved to a base (inherited) InstructionSet class?
-        {
-            // Do your reflective invocation thing here...              
-            Type reflectionType = typeof(X86InstructionSet);
-
-            // Turn 32-bit instruction opcode into instruction opcode.
-
-            // Prep for 'reflective invoke' :-).
-            string methodName = "_" + machineCode;//Encoding.ASCII.GetString(this.operands[0].value).Trim(new char[] { '\0' }); // Remove empty character bytes from opcode.
-
-            MethodInfo info = reflectionType.GetMethod(methodName);
-            ParameterInfo[] parameterInfos = info.GetParameters();
-
-            return parameterInfos.Length + 1; // Always return at least 1, as in - an instruction with no parameters.
-        }        
 
 
 
@@ -138,7 +120,7 @@ namespace BlackICE2
 
 
 
-        public void _ZZ(byte[] destination, byte[] source) // todo todo rename method with correct opcode - MOV ADDR LIT
+        public void _ZZ(byte[] destination, byte[] source) // todo rename method with correct opcode - MOV ADDR LIT
         {
             // Get the size of the literal, so you know how many bytes to write to memory.
             int iSizeOfLiteral = source.Length;

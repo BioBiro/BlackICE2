@@ -70,6 +70,7 @@
     <Compile Include="Human.cs" />
     <Compile Include="ICPU.cs" />
     <Compile Include="IInstructionSet.cs" />
+    <Compile Include="InstructionSet.cs" />
     <Compile Include="Interpreter.cs" />
     <Compile Include="IRegisters.cs" />
     <Compile Include="Loader.cs" />

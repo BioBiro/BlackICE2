@@ -32,6 +32,7 @@ namespace BlackICE2
             }
         }
 
+        public int register { get; set; }
         public int status { get; set; }
         public int expectedResult { get; set; }
         public int actualResult { get; set; }
@@ -39,15 +40,14 @@ namespace BlackICE2
 
 
 
-        public UnitTest(string name, int status, int expectedResult, int actualResult, string message)
+        public UnitTest(string name, int register, int status, int expectedResult, int actualResult, string message)
         {
             this.name = name;
+            this.register = register;
             this.status = status;
             this.expectedResult = expectedResult;
             this.actualResult = actualResult;
             this.message = message;
-
-            //this.NotifyPropertyChanged("propName");
         }
     }
 }
