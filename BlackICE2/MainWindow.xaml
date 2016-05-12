@@ -12,8 +12,11 @@
             <MenuItem Header="File" Margin="0">
                 <MenuItem Header="Load ASM" HorizontalAlignment="Left" Click="MenuItem_Click" Width="130"/>
                 <MenuItem Header="Load machine code" HorizontalAlignment="Left" Click="MenuItem_Click_2"/>
+                <Separator/>
                 <MenuItem x:Name="miLoadUnitTests" Header="Load unit tests" HorizontalAlignment="Left" Width="130" Click="miLoadUnitTests_Click"/>
                 <MenuItem x:Name="miSaveUnitTests" Header="Save unit tests" HorizontalAlignment="Left" Width="130" Click="miSaveUnitTests_Click"/>
+                <Separator/>
+                <MenuItem x:Name="miQuit" Header="Quit" HorizontalAlignment="Left" Width="130" Click="miQuit_Click"/>
             </MenuItem>
             <MenuItem Header="Help" Margin="0">
                 <MenuItem Header="About" HorizontalAlignment="Left" Width="85" Click="MenuItem_Click_1"/>
@@ -57,18 +60,23 @@
         </GroupBox>
         <GroupBox x:Name="groupBox4" Header="Unit Tests" HorizontalAlignment="Left" Margin="10,495,0,0" VerticalAlignment="Top" Height="207" Width="763">
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="197" Margin="0,0,-2,-8" Width="753">
-                <ListView x:Name="lvUnitTests" ItemsSource="{Binding Path=UnitTests}" HorizontalAlignment="Left" Height="143" Margin="10,10,0,0" VerticalAlignment="Top" Width="733" MouseDoubleClick="lvUnitTests_MouseDoubleClick">
+                <ListView x:Name="lvUnitTests" ItemsSource="{Binding Path=UnitTests}" HorizontalAlignment="Left" Height="143" Margin="10,10,0,0" VerticalAlignment="Top" Width="733">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding name}"/>
                             <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding status}"/>
+                            <GridViewColumn Header="Register" Width="100" DisplayMemberBinding="{Binding register}"/>
                             <GridViewColumn Header="Expected Result" Width="100" DisplayMemberBinding="{Binding expectedResult}"/>
                             <GridViewColumn Header="Actual Result" Width="100" DisplayMemberBinding="{Binding actualResult}"/>
                             <GridViewColumn Header="Message" Width="100" DisplayMemberBinding="{Binding message}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button x:Name="bAddUnitTest" Content="Add unit test" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="75" Click="bAddUnitTest_Click"/>
+                <Button x:Name="bAddUnitTest" Content="Add" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="75" Click="bAddUnitTest_Click"/>
+                <Button x:Name="bRunUnitTest" Content="Run" HorizontalAlignment="Left" Margin="588,158,0,0" VerticalAlignment="Top" Width="75" Click="bRunUnitTest_Click"/>
+                <Button x:Name="bEditUnitTest" Content="Edit" HorizontalAlignment="Left" Margin="90,158,0,0" VerticalAlignment="Top" Width="75" Click="bEditUnitTest_Click"/>
+                <Button x:Name="bRunUnitTests" Content="Run All" HorizontalAlignment="Left" Margin="668,158,0,0" VerticalAlignment="Top" Width="75" Click="bRunUnitTests_Click"/>
+                <Button x:Name="bDeleteUnitTest" Content="Delete" HorizontalAlignment="Left" Margin="170,158,0,0" VerticalAlignment="Top" Width="75" Click="bDeleteUnitTest_Click"/>
             </Grid>
         </GroupBox>
 

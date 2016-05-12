@@ -11,8 +11,9 @@ namespace BlackICE2
     [Serializable]
     public class UnitTest : INotifyPropertyChanged
     {
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)

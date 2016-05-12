@@ -21,7 +21,7 @@ namespace BlackICE2
 
         public UnitTestSuite(string name)
         {
-            this.unitTests = new ObservableCollection<UnitTest>();
+            this.unitTests = new ObservableCollection<UnitTest>();            
             
             
             

@@ -41,6 +41,7 @@ namespace BlackICE2
 
 
 
+            
             Singleton.GetSingleton().unitTestSuite = new UnitTestSuite("testo suite");
         }
 
@@ -340,8 +341,7 @@ namespace BlackICE2
                 }
 
                 listBox1.SelectedIndex = 0;
-
-
+                
 
 
                 // run the text in the GUI editor.
@@ -466,6 +466,22 @@ namespace BlackICE2
 
 
 
+                    // Clear, then add, as replacing the uniTestSuite singleton object will wreck the UI bindings... for some reason.
+                    Singleton.GetSingleton().unitTestSuite.unitTests.Clear();
+                    foreach (UnitTest ut in uts.unitTests)
+                    {
+                        Singleton.GetSingleton().unitTestSuite.unitTests.Add(ut);
+                    }
+
+
+
+
+
+
+
+
+
+                    
                     uts.name = "blah blah";
                     Singleton.GetSingleton().unitTestSuite = uts;
 
@@ -534,6 +550,11 @@ namespace BlackICE2
             //System.IO.Stream ms = File.OpenWrite("asmtestcases.b2u");            
         }
 
+        private void miQuit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(); //Application.Current.Shutdown();
+        }
+
         private void bAddUnitTest_Click(object sender, RoutedEventArgs e)
         {
             TestCase tc = new TestCase();
@@ -542,7 +563,7 @@ namespace BlackICE2
             Singleton.GetSingleton().unitTestSuite.unitTests.Add(tc.UT); // Add test case created in dialog.                 
         }
 
-        private void lvUnitTests_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void bEditUnitTest_Click(object sender, RoutedEventArgs e)
         {
             if (lvUnitTests.SelectedIndex >= 0) // Only allow editing if we have unit tests.
             {
@@ -551,6 +572,38 @@ namespace BlackICE2
                 tc.ShowDialog();
                 Singleton.GetSingleton().unitTestSuite.unitTests[0] = tc.UT; // Add test case created in dialog.
             }
+        }
+
+        private void bDeleteUnitTest_Click(object sender, RoutedEventArgs e)
+        {
+            //
+        }
+
+        private void bRunUnitTest_Click(object sender, RoutedEventArgs e)
+        {
+            // Run code (no stepping).
+            
+
+            
+            
+            // Record result.
+            Singleton.GetSingleton().unitTestSuite.unitTests[0].actualResult = Singleton.GetSingleton().unitTestSuite.unitTests[0].register; // todo - Get the value via the register to test.
+            
+            // Do assert.
+            if (Singleton.GetSingleton().unitTestSuite.unitTests[0].actualResult == Singleton.GetSingleton().unitTestSuite.unitTests[0].expectedResult)
+            {
+                Singleton.GetSingleton().unitTestSuite.unitTests[0].status = 0;
+                Singleton.GetSingleton().unitTestSuite.unitTests[0].message = "passed";
+            }
+            else
+            {
+                // unit test failed.
+            }
+        }
+
+        private void bRunUnitTests_Click(object sender, RoutedEventArgs e)
+        {
+            //
         }
     }
 }
