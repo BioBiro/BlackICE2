@@ -15,7 +15,7 @@ namespace BlackICE2
 
 
 
-        /*public Tuple<List<byte>, List<int>> Tokenize(List<string> source)
+        public Tuple<List<byte>, List<int>> Tokenize(List<string> source)
         {
             Tuple<List<byte>, List<int>> t = new Tuple<List<byte>, List<int>>(new List<byte>(), new List<int>());
             
@@ -30,7 +30,7 @@ namespace BlackICE2
 
             foreach (string unsplitString in source)
             {
-                string[] splitStrings = unsplitString.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                string[] splitStrings = unsplitString.Split(new char[] {' ', ','}, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (string splitString in splitStrings)
                 {
@@ -41,45 +41,181 @@ namespace BlackICE2
 
 
             // Parse split source.
+            int asmLine = 0;
+            
             int i;
 
-            for (i = 0; i < source.Count; i++)
+            for (i = 0; i < splitSource.Count; i++)
             {
-                if (source[i] == "mov eax, 10")
+                if (splitSource[i] == "mov")
                 {
-                    t.Item1.Add(184); // Byte.
-                    t.Item2.Add(1); // ASM line.
-                    
-                    int toSkip = instructions.ToSkip(184); // Number of parameters.
-                    
+                    if ((splitSource[i + 1] == "eax") || ((splitSource[i + 1] == "ebx")))
+                    {
+                        if (splitSource[i + 2] == "10")
+                        {
+                            t.Item1.Add(184); // Byte.
+                            
+
+
+                            int toSkip = instructions.ToSkip(184); // Number of parameters.
+
+                            for (int j = 0; j < toSkip; j++)
+                            {
+                                if (j == 1) { t.Item1.Add(Byte.Parse(splitSource[i + j + 1])); } // Grab the second parameter only, for this opcode.
+                                t.Item2.Add(asmLine); // ASM line.
+                            }
+
+                            i += toSkip - 1; // Push loop past any parameters.
+
+                            asmLine += 1;                         
+                        }
+                        else if (splitSource[i + 2] == "eax")
+                        {
+                            t.Item1.Add(89); // Byte.
+
+
+
+                            int toSkip = instructions.ToSkip(89); // Number of parameters.
+
+                            for (int j = 0; j < toSkip; j++)
+                            {
+                                if (j == 1) { t.Item1.Add(195); } // X86 const value for EBX.
+                                t.Item2.Add(asmLine); // ASM line.
+                            }
+
+                            i += toSkip - 1; // Push loop past any parameters.
+
+                            asmLine += 1;
+                        }
+                    }
+                }
+                else if (splitSource[i] == "call")
+                {
+                    t.Item1.Add(232); // Byte.
+
+
+
+                    int toSkip = instructions.ToSkip(232); // Number of parameters.
+
                     for (int j = 0; j < toSkip; j++)
                     {
-                        t.Item1.Add(Byte.Parse(source[i + j + 1])); // Byte.
-                        t.Item2.Add(j + 1); // ASM line.
+                        if (j == 1) { t.Item1.Add(8); } // todo - fix hardcoded line jump address, here.
+                        t.Item2.Add(asmLine); // ASM line.
                     }
 
-                    i += toSkip; // Push loop past any parameters.
-                }
-                else if (source[i] == "call @@myfunction")
-                {
+                    i += toSkip - 1; // Push loop past any parameters.
 
+                    asmLine += 1;
                 }
-                else if (source[i] == "inc eax")
+                else if (splitSource[i] == "inc")
                 {
+                    if (splitSource[i + 1] == "eax")
+                    {
+                        t.Item1.Add(40); // Byte.
 
+
+
+                        int toSkip = instructions.ToSkip(40); // Number of parameters.
+
+                        for (int j = 0; j < toSkip; j++)
+                        {
+                            t.Item2.Add(asmLine); // ASM line.
+                        }
+
+                        i += toSkip - 1; // Push loop past any parameters.
+
+                        asmLine += 1;
+                    }
                 }
-                else if (source[i] == "push eax")
+                else if (splitSource[i] == "push")
                 {
+                    if (splitSource[i + 1] == "eax")
+                    {
+                        t.Item1.Add(50); // Byte.
 
+
+
+                        int toSkip = instructions.ToSkip(50); // Number of parameters.
+
+                        for (int j = 0; j < toSkip; j++)
+                        {                            
+                            t.Item2.Add(asmLine); // ASM line.
+                        }
+
+                        i += toSkip - 1; // Push loop past any parameters.
+
+                        asmLine += 1;
+                    }
+                    else if (splitSource[i + 1] == "77")
+                    {
+                        t.Item1.Add(106); // Byte.
+
+
+
+                        int toSkip = instructions.ToSkip(106); // Number of parameters.
+
+                        for (int j = 0; j < toSkip; j++)
+                        {
+                            if (j == 1) { t.Item1.Add(Byte.Parse(splitSource[i + j])); } // Grab the first parameter only, for this opcode.
+                            t.Item2.Add(asmLine); // ASM line.
+                        }
+
+                        i += toSkip - 1; // Push loop past any parameters.
+
+                        asmLine += 1;
+                    }
+                }
+                else if (splitSource[i] == "pop")
+                {
+                    if (splitSource[i + 1] == "eax")
+                    {
+                        t.Item1.Add(58); // Byte.
+
+
+
+                        int toSkip = instructions.ToSkip(58); // Number of parameters.
+
+                        for (int j = 0; j < toSkip; j++)
+                        {
+                            t.Item2.Add(asmLine); // ASM line.
+                        }
+
+                        i += toSkip - 1; // Push loop past any parameters.
+
+                        asmLine += 1;
+                    }
+                }
+                else if (splitSource[i].StartsWith("@@"))
+                {
+                    asmLine += 1;
+                }
+                else if (splitSource[i] == "ret")
+                {                    
+                    t.Item1.Add(195); // Byte.
+
+
+
+                    int toSkip = instructions.ToSkip(195); // Number of parameters.
+
+                    for (int j = 0; j < toSkip; j++)
+                    {
+                        t.Item2.Add(asmLine); // ASM line.
+                    }
+
+                    i += toSkip - 1; // Push loop past any parameters.
+
+                    asmLine += 1;                    
                 }
             }
-                        
+            
             
 
             return t;
-        }*/
+        }
 
-        public Tuple<List<byte>, List<int>> Tokenize(List<string> source)
+
+
+        /*public Tuple<List<byte>, List<int>> Tokenize(List<string> source)
         {
             // This should return machine code from your assembly language!
 
@@ -118,7 +254,7 @@ namespace BlackICE2
                  );
 
             return t;
-        }
+        }*/
 
 
 

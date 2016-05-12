@@ -9,7 +9,7 @@ namespace BlackICE2UnitTests
     public class X86InstructionSetUnitTests
     {
         [TestMethod]
-        public void Test_184()
+        public void TestInstructionSet_184()
         {
             BlackICE2.Computer computer = new BlackICE2.Computer();
             computer.cPU = new BlackICE2.X86CPU(computer);

@@ -39,8 +39,9 @@ namespace BlackICE2
             
             // * Opcodes. *
             this.opcodes = new Dictionary<string, string>();
+            
+            
 
-            // MOV
             this.opcodes.Add("_184", "MOV EAX, ");
 
             this.opcodes.Add("_232", "CALL ");
