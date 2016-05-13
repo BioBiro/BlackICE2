@@ -56,7 +56,7 @@ namespace BlackICE2
 
             this.opcodes.Add("_106", "PUSH ");
 
-            //this.opcodes.Add("_233", "JMP ");
+            this.opcodes.Add("_233", "JMP ");
 
             this.opcodes.Add("_89", "MOV ");
         }
@@ -214,6 +214,8 @@ namespace BlackICE2
 
         public void _58() // POP EAX
         {
+
+
             int stackPointer = parentComputer.cPU.GetRegisters().GetRegister((int)(X86Registers.RegisterPointers.STACK_POINTER), 0)[0];//stackPointerConst, 0); // Get stack pointer.
 
             byte[] bytes = new byte[4]; // todo - fill to size of CPU architechture.;
